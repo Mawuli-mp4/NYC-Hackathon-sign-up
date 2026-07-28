@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Tech Futures Hackathon — Climate Week NYC 2026</title>
+  <meta name="description" content="Job-seeking technologists build tangible, portfolio-ready climate prototypes against urgent NYC environmental challenges — presented live to judges and hiring climate-tech companies. Climate Week NYC, Sept 21–23." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Green Tech Futures Hackathon — Climate Week NYC 2026" />
+  <meta property="og:description" content="Most climate hackathons end with a slide. This one ends with something running." />
+  <meta property="og:url" content="https://nyc-hackathon-sign-up-hopamine.vercel.app" />
+
+  <!-- Fonts: Fraunces (organic display serif) + Barlow Condensed (utility/body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:    #08201C;  /* hero + dark sections */
+      --ink-2:  #123B33;  /* proof band */
+      --paper:  #E9EFE9;  /* body background */
+      --blue:   #5BC2E7;  /* Hopamine blue — CTAs, stats, accents */
+      --green:  #4CA65A;  /* solarpunk green — timeline markers, labels */
+
+      --paper-dim: #dbe4db;
+      --ink-soft:  rgba(233, 239, 233, 0.72);
+      --ink-faint: rgba(233, 239, 233, 0.46);
+
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans:  "Barlow Condensed", "Helvetica Neue", Arial, sans-serif;
+
+      --maxw: 1160px;
+      --gutter: clamp(1.25rem, 5vw, 4rem);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* Fraunces optical / stylistic settings — SOFT 40 / WONK 1 */
+    h1, h2, h3, .display, .eyebrow-num {
+      font-family: var(--serif);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+      font-weight: 500;
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+    }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
+
+    section { position: relative; }
+
+    /* Eyebrow / kicker */
+    .eyebrow {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+
+    a { color: inherit; }
+
+    /* ---- Buttons ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 600;
+      font-size: 1.02rem;
+      text-decoration: none;
+      padding: 1rem 1.9rem;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: var(--ink);
+      box-shadow: 0 0 0 0 rgba(91, 194, 231, 0.5);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -14px rgba(91, 194, 231, 0.75);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: rgba(8, 32, 28, 0.28);
+    }
+    .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+    .btn .arrow { font-family: var(--sans); font-weight: 400; transition: transform 0.18s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding-block: clamp(5rem, 12vh, 9rem);
+      overflow: hidden;
+    }
+
+    /* Signature dot-matrix halftone, masked to a horizon glow.
+       Two dot layers of different scale sit over a low radial glow;
+       a mask fades the dots so they read as light rising off a horizon. */
+    .hero__halftone {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero__halftone::before,
+    .hero__halftone::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+    /* coarse dots */
+    .hero__halftone::before {
+      background-image: radial-gradient(circle at center, var(--blue) 1.35px, transparent 1.6px);
+      background-size: 22px 22px;
+      background-position: 0 0;
+      opacity: 0.9;
+      -webkit-mask-image: radial-gradient(120% 78% at 78% 118%, #000 0%, rgba(0,0,0,0.85) 26%, transparent 60%);
+              mask-image: radial-gradient(120% 78% at 78% 118%, #000 0%, rgba(0,0,0,0.85) 26%, transparent 60%);
+    }
+    /* fine dots, offset for a dithered feel */
+    .hero__halftone::after {
+      background-image: radial-gradient(circle at center, var(--green) 1px, transparent 1.3px);
+      background-size: 11px 11px;
+      background-position: 5px 5px;
+      opacity: 0.55;
+      -webkit-mask-image: radial-gradient(130% 70% at 82% 122%, #000 0%, rgba(0,0,0,0.7) 30%, transparent 62%);
+              mask-image: radial-gradient(130% 70% at 82% 122%, #000 0%, rgba(0,0,0,0.7) 30%, transparent 62%);
+    }
+    /* soft horizon glow underneath the dots */
+    .hero__glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(90% 55% at 80% 120%, rgba(91,194,231,0.20), rgba(76,166,90,0.10) 40%, transparent 68%);
+    }
+
+    .hero .wrap { position: relative; z-index: 1; }
+
+    .hero__eyebrow {
+      color: var(--blue);
+      margin-bottom: 1.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.9rem;
+      align-items: center;
+    }
+    .hero__eyebrow .dot { color: var(--green); opacity: 0.8; }
+
+    .hero h1 {
+      font-size: clamp(3.1rem, 8.5vw, 6.6rem);
+      max-width: 15ch;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--blue);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+    }
+
+    .hero__lede {
+      font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+      max-width: 46ch;
+      color: var(--ink-soft);
+      margin-bottom: 2.6rem;
+      line-height: 1.5;
+    }
+
+    .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
+    .hero .btn-ghost { color: var(--paper); border-color: rgba(233,239,233,0.35); }
+    .hero .btn-ghost:hover { border-color: var(--paper); }
+    .hero__deadline {
+      font-size: 0.98rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-faint);
+    }
+    .hero__deadline strong { color: var(--paper); font-weight: 600; }
+
+    /* =====================================================
+       THESIS
+       ===================================================== */
+    .thesis { padding-block: clamp(5rem, 11vh, 8.5rem); }
+    .thesis__grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: start;
+    }
+    .thesis h2 {
+      font-size: clamp(2rem, 4.6vw, 3.5rem);
+      max-width: 16ch;
+    }
+    .thesis h2 em { font-style: italic; color: var(--green); }
+    .thesis__body p { font-size: 1.12rem; color: rgba(8,32,28,0.82); margin-bottom: 1.1rem; max-width: 44ch; }
+    .thesis__body p:last-child { margin-bottom: 0; }
+    .rule { height: 1px; background: rgba(8,32,28,0.14); border: 0; margin: 0; }
+
+    /* =====================================================
+       WHAT YOU LEAVE WITH
+       ===================================================== */
+    .leave { padding-block: clamp(4.5rem, 10vh, 8rem); }
+    .section-label {
+      color: var(--green);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(8,32,28,0.16);
+    }
+    .leave__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.4rem);
+    }
+    .leave__item {
+      border-top: 2px solid var(--ink);
+      padding-top: 1.2rem;
+    }
+    .leave__num {
+      font-family: var(--serif);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+      font-size: 1.4rem;
+      color: var(--blue);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .leave__item h3 { font-size: 1.5rem; line-height: 1.08; margin-bottom: 0; }
+    .leave__item p { font-size: 1rem; color: rgba(8,32,28,0.7); margin-top: 0.7rem; }
+
+    /* =====================================================
+       HOW IT RUNS — timeline
+       ===================================================== */
+    .runs {
+      background: var(--ink);
+      color: var(--paper);
+      padding-block: clamp(5rem, 11vh, 8.5rem);
+    }
+    .runs .section-label { color: var(--green); }
+    .runs .section-label::after { background: rgba(233,239,233,0.2); }
+    .timeline { border-top: 1px solid rgba(233,239,233,0.16); }
+    .t-row {
+      display: grid;
+      grid-template-columns: 0.6fr 1.4fr;
+      gap: clamp(1rem, 4vw, 3rem);
+      padding-block: 1.9rem;
+      border-bottom: 1px solid rgba(233,239,233,0.16);
+      align-items: baseline;
+      transition: background 0.2s ease;
+    }
+    .t-row:hover { background: rgba(233,239,233,0.03); }
+    .t-date {
+      font-family: var(--serif);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+      font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+      color: var(--blue);
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+    }
+    .t-date .marker {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+      flex: none;
+      transform: translateY(-2px);
+    }
+    .t-row.is-live .t-date .marker {
+      background: var(--blue);
+      box-shadow: 0 0 0 0 rgba(91,194,231,0.6);
+      animation: pulse 2.2s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(91,194,231,0.55); }
+      70%  { box-shadow: 0 0 0 8px rgba(91,194,231,0); }
+      100% { box-shadow: 0 0 0 0 rgba(91,194,231,0); }
+    }
+    .t-body h3 { font-size: 1.55rem; margin-bottom: 0.35rem; }
+    .t-body p { color: var(--ink-soft); font-size: 1.02rem; max-width: 52ch; }
+    .t-tag {
+      display: inline-block;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--green);
+      border: 1px solid rgba(76,166,90,0.5);
+      border-radius: 2px;
+      padding: 0.15rem 0.55rem;
+      margin-top: 0.75rem;
+    }
+
+    /* =====================================================
+       PROOF BAND
+       ===================================================== */
+    .proof {
+      background: var(--ink-2);
+      color: var(--paper);
+      padding-block: clamp(4rem, 9vh, 6.5rem);
+    }
+    .proof__head { color: var(--blue); margin-bottom: 2.6rem; }
+    .proof__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+    }
+    .stat__num {
+      font-family: var(--serif);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+      font-weight: 600;
+      font-size: clamp(3.2rem, 8vw, 5.6rem);
+      color: var(--blue);
+      line-height: 0.95;
+    }
+    .stat__label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      margin-top: 0.7rem;
+    }
+    .proof__foot {
+      margin-top: 2.8rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid rgba(233,239,233,0.16);
+      color: var(--ink-faint);
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .proof__foot strong { color: var(--green); font-weight: 600; }
+
+    /* =====================================================
+       APPLY — form
+       ===================================================== */
+    .apply {
+      background: var(--ink);
+      color: var(--paper);
+      padding-block: clamp(5rem, 12vh, 9rem);
+    }
+    .apply__prize { display: inline-block; color: var(--green); margin-bottom: 1.6rem; }
+    .apply h2 {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      max-width: 16ch;
+      margin-bottom: 1.2rem;
+    }
+    .apply h2 em { font-style: italic; color: var(--blue); }
+    .apply__sub {
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      max-width: 46ch;
+      margin-bottom: 3rem;
+    }
+
+    .apply__form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem 1.8rem;
+      max-width: 760px;
+    }
+    .field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .field--full { grid-column: 1 / -1; }
+    .field label {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+    .field input,
+    .field select {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid transparent;
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      width: 100%;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .field input::placeholder { color: rgba(8,32,28,0.4); }
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(91,194,231,0.35);
+    }
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2308201C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    .hint { font-size: 0.9rem; color: var(--ink-faint); margin-top: 0.1rem; }
+    .hint strong { color: var(--paper); font-weight: 600; }
+
+    /* Solo / Team toggle */
+    .toggle {
+      display: inline-flex;
+      border: 1px solid rgba(233,239,233,0.3);
+      border-radius: 3px;
+      padding: 3px;
+      gap: 3px;
+      width: max-content;
+    }
+    .toggle__opt {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+      background: transparent;
+      border: 0;
+      border-radius: 2px;
+      padding: 0.6rem 1.6rem;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .toggle__opt.is-active { background: var(--blue); color: var(--ink); }
+
+    .apply__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.6rem;
+      margin-top: 0.6rem;
+    }
+    .apply__note { font-size: 0.95rem; color: var(--ink-faint); letter-spacing: 0.03em; }
+    .apply__note strong { color: var(--paper); font-weight: 600; }
+
+    .form-msg { grid-column: 1 / -1; font-size: 1rem; min-height: 1.2em; margin-top: 0.2rem; }
+    .form-msg.is-ok  { color: var(--green); }
+    .form-msg.is-err { color: #ff9a8a; }
+    .btn[disabled] { opacity: 0.6; cursor: default; transform: none; }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+    footer {
+      background: var(--ink);
+      color: var(--ink-faint);
+      padding-block: 3rem;
+      font-size: 0.95rem;
+    }
+    .footer__grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer__brand {
+      font-family: var(--serif);
+      font-variation-settings: "SOFT" 40, "WONK" 1;
+      color: var(--paper);
+      font-size: 1.25rem;
+    }
+    .footer__brand span { color: var(--green); }
+    .footer__meta { letter-spacing: 0.04em; }
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+    @media (max-width: 860px) {
+      .thesis__grid { grid-template-columns: 1fr; gap: 2rem; }
+      .leave__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.6rem; }
+      .proof__grid { grid-template-columns: 1fr; gap: 2.4rem; text-align: left; }
+      .t-row { grid-template-columns: 1fr; gap: 0.6rem; }
+      .t-date { font-size: 1.5rem; }
+      .apply__form { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .leave__grid { grid-template-columns: 1fr; }
+      .hero { min-height: 88vh; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .t-row.is-live .t-date .marker { animation: none; }
+      .btn, .btn .arrow { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero__glow"></div>
+    <div class="hero__halftone"></div>
+    <div class="wrap">
+      <p class="eyebrow hero__eyebrow">
+        Climate Week NYC <span class="dot">·</span> Sept 20–27
+        <span class="dot">·</span> Green Jobs Pavilion
+      </p>
+      <h1>Build something that&rsquo;s still <em>running</em> when the week ends.</h1>
+      <p class="hero__lede">
+        Job-seeking technologists ship tangible climate prototypes against urgent
+        NYC environmental challenges &mdash; scoped for scale from day one, presented
+        live to judges and hiring climate-tech companies.
+      </p>
+      <div class="hero__cta">
+        <a href="#apply" class="btn btn-primary">Apply to build <span class="arrow">&rarr;</span></a>
+        <a href="#how" class="btn btn-ghost">See how it runs</a>
+        <span class="hero__deadline">Applications close <strong>September 1</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ THESIS ============ -->
+  <section class="thesis">
+    <div class="wrap thesis__grid">
+      <h2>Most climate hackathons end with a slide. This one ends with <em>something running.</em></h2>
+      <div class="thesis__body">
+        <p>
+          No ideation theatre. Over 48 hours of build time, post-secondary
+          technologists work in teams against real NYC environmental briefs and
+          leave with a working prototype &mdash; not a concept.
+        </p>
+        <p>
+          Every build is designed for scalability and practicality from the first
+          commit, then presented live to a room of judges and climate-tech companies
+          who are actively hiring.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ============ WHAT YOU LEAVE WITH ============ -->
+  <section class="leave">
+    <div class="wrap">
+      <p class="eyebrow section-label">What you leave with</p>
+      <div class="leave__grid">
+        <div class="leave__item">
+          <span class="leave__num">01</span>
+          <h3>A co-developed NYC climate prototype</h3>
+          <p>A real build against a real brief &mdash; not a napkin sketch.</p>
+        </div>
+        <div class="leave__item">
+          <span class="leave__num">02</span>
+          <h3>Direct contact with recruiting climate-tech companies</h3>
+          <p>Present to the people doing the hiring, in the room.</p>
+        </div>
+        <div class="leave__item">
+          <span class="leave__num">03</span>
+          <h3>Hands-on skills built alongside action-biased peers</h3>
+          <p>Ship shoulder-to-shoulder with people who build, not just talk.</p>
+        </div>
+        <div class="leave__item">
+          <span class="leave__num">04</span>
+          <h3>A finished prototype &amp; deck, portfolio-ready</h3>
+          <p>Walk out with proof of work you can put in front of anyone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT RUNS ============ -->
+  <section class="runs" id="how">
+    <div class="wrap">
+      <p class="eyebrow section-label">How it runs</p>
+      <div class="timeline">
+
+        <div class="t-row">
+          <div class="t-date"><span class="marker"></span>Sept 1</div>
+          <div class="t-body">
+            <h3>Applications close</h3>
+            <p>Enter with a 90-second, YC-style video pitch. That&rsquo;s the whole bar to entry.</p>
+          </div>
+        </div>
+
+        <div class="t-row">
+          <div class="t-date"><span class="marker"></span>Sept 7</div>
+          <div class="t-body">
+            <h3>Teams announced</h3>
+            <p>Selected builders are matched into teams and briefed on the tracks.</p>
+          </div>
+        </div>
+
+        <div class="t-row is-live">
+          <div class="t-date"><span class="marker"></span>Sept 21</div>
+          <div class="t-body">
+            <h3>Build begins &mdash; in person</h3>
+            <p>Day one kicks off live at the Green Jobs Pavilion. The 48-hour clock starts.</p>
+            <span class="t-tag">In person</span>
+          </div>
+        </div>
+
+        <div class="t-row is-live">
+          <div class="t-date"><span class="marker"></span>Sept 22</div>
+          <div class="t-body">
+            <h3>Build continues &mdash; online</h3>
+            <p>Teams keep shipping remotely with mentor check-ins through the second day.</p>
+            <span class="t-tag">Online</span>
+          </div>
+        </div>
+
+        <div class="t-row is-live">
+          <div class="t-date"><span class="marker"></span>Sept 23</div>
+          <div class="t-body">
+            <h3>Live pitch &amp; winners announced</h3>
+            <p>Final builds are presented live to judges and hiring climate-tech companies. Winners announced on day three.</p>
+            <span class="t-tag">Finals</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROOF BAND ============ -->
+  <section class="proof">
+    <div class="wrap">
+      <p class="eyebrow proof__head">From the last run</p>
+      <div class="proof__grid">
+        <div class="stat">
+          <div class="stat__num">257</div>
+          <div class="stat__label">Participants</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">58</div>
+          <div class="stat__label">Startups incubated</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">55+</div>
+          <div class="stat__label">Projects submitted</div>
+        </div>
+      </div>
+      <p class="proof__foot">Last winning team: <strong>Green Garden</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ============ APPLY ============ -->
+  <section class="apply" id="apply">
+    <div class="wrap">
+      <p class="eyebrow apply__prize">Prizes to be announced</p>
+      <h2>48 hours. A real brief. Something that <em>runs.</em></h2>
+      <p class="apply__sub">
+        Enter with a 90-second video pitch. Build alongside people who ship.
+        Leave with a prototype and the people hiring for it.
+      </p>
+
+      <form class="apply__form" id="applyForm" novalidate>
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone</label>
+          <input id="f-phone" name="phone" type="tel" required autocomplete="tel" placeholder="+1" />
+        </div>
+        <div class="field">
+          <label for="f-portfolio">Portfolio link</label>
+          <input id="f-portfolio" name="portfolio" type="url" placeholder="https://" />
+        </div>
+
+        <div class="field field--full">
+          <label>Applying as</label>
+          <div class="toggle" role="radiogroup" aria-label="Applying as">
+            <button type="button" class="toggle__opt is-active" data-value="Solo" role="radio" aria-checked="true">Solo</button>
+            <button type="button" class="toggle__opt" data-value="Team" role="radio" aria-checked="false">Team</button>
+          </div>
+          <input type="hidden" name="entryType" id="f-entryType" value="Solo" />
+        </div>
+
+        <div class="field">
+          <label for="f-social-platform">Socials &mdash; platform</label>
+          <select id="f-social-platform" name="socialPlatform">
+            <option value="Twitter">Twitter / X</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="LinkedIn">LinkedIn</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-social-link">Socials &mdash; link</label>
+          <input id="f-social-link" name="socialLink" type="url" placeholder="https://" />
+        </div>
+
+        <div class="field field--full">
+          <label for="f-video">Video pitch link</label>
+          <input id="f-video" name="video" type="url" required placeholder="https://" />
+          <p class="hint">
+            90-second pitch. Paste an unlisted / private YouTube link, or a
+            WeTransfer link with the expiry set to <strong>never</strong>.
+          </p>
+        </div>
+
+        <div class="field field--full apply__actions">
+          <button type="submit" class="btn btn-primary" id="applySubmit">Submit application <span class="arrow">&rarr;</span></button>
+          <p class="apply__note">Applications close <strong>September 1</strong> &middot; Teams announced <strong>September 7</strong></p>
+        </div>
+
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap footer__grid">
+      <div class="footer__brand">Hopamine <span>&times;</span> Green Jobs Board</div>
+      <div class="footer__meta">Green Tech Futures Hackathon &middot; Climate Week NYC 2026</div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       The one config line.
+       Paste your Google Apps Script Web App URL between the quotes
+       to record applications into a Google Sheet (setup steps in
+       the handoff notes). Until it is set, the form still validates
+       and thanks the applicant, but nothing is written to a sheet.
+       ============================================================ */
+    const SHEET_ENDPOINT = "";
+
+    (function () {
+      var form = document.getElementById("applyForm");
+      if (!form) return;
+
+      // Solo / Team toggle
+      var toggleOpts = Array.prototype.slice.call(document.querySelectorAll(".toggle__opt"));
+      var entryType = document.getElementById("f-entryType");
+      toggleOpts.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          toggleOpts.forEach(function (b) {
+            b.classList.remove("is-active");
+            b.setAttribute("aria-checked", "false");
+          });
+          btn.classList.add("is-active");
+          btn.setAttribute("aria-checked", "true");
+          entryType.value = btn.getAttribute("data-value");
+        });
+      });
+
+      var msg = document.getElementById("formMsg");
+      var submitBtn = document.getElementById("applySubmit");
+
+      function resetToggle() {
+        toggleOpts.forEach(function (b, i) {
+          b.classList.toggle("is-active", i === 0);
+          b.setAttribute("aria-checked", i === 0 ? "true" : "false");
+        });
+        entryType.value = "Solo";
+      }
+
+      function finish(ok) {
+        submitBtn.disabled = false;
+        if (ok) {
+          form.reset();
+          resetToggle();
+          msg.textContent = "Application received. Watch your inbox — teams are announced September 7.";
+          msg.className = "form-msg is-ok";
+        } else {
+          msg.textContent = "Something went wrong sending that. Please try again in a moment.";
+          msg.className = "form-msg is-err";
+        }
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var payload = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          portfolio: form.portfolio.value.trim(),
+          entryType: entryType.value,
+          socialPlatform: form.socialPlatform.value,
+          socialLink: form.socialLink.value.trim(),
+          video: form.video.value.trim(),
+          submittedAt: new Date().toISOString()
+        };
+
+        submitBtn.disabled = true;
+        msg.textContent = "Sending…";
+        msg.className = "form-msg";
+
+        if (!SHEET_ENDPOINT) {
+          // Not wired to a sheet yet — accept optimistically so the page is demoable.
+          console.warn("SHEET_ENDPOINT is not set — application was not recorded.");
+          finish(true);
+          return;
+        }
+
+        fetch(SHEET_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        }).then(function () { finish(true); })
+          .catch(function () { finish(false); });
+      });
+    })();
+  </script>
+</body>
+</html>
