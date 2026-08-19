@@ -3,519 +3,522 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Green Tech Futures Hackathon — Climate Week NYC 2026</title>
-  <meta name="description" content="Job-seeking technologists build tangible, portfolio-ready climate prototypes against urgent NYC environmental challenges — presented live to judges and hiring climate-tech companies. Climate Week NYC, Sept 21–23." />
+  <title>Green Tech Futures Hackathon, Climate Week NYC 2026</title>
+  <meta name="description" content="Job-seeking technologists build tangible, portfolio-ready climate prototypes against urgent NYC environmental challenges, presented live to judges, industry vets and hiring climate-tech companies. Climate Week NYC, Sept 20–23." />
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Green Tech Futures Hackathon — Climate Week NYC 2026" />
-  <meta property="og:description" content="Most climate hackathons end with a slide. This one ends with something running." />
-  <meta property="og:url" content="https://nyc-hackathon-sign-up-hopamine.vercel.app" />
-
-  <!-- Fonts: Fraunces (organic display serif) + Barlow Condensed (utility/body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta property="og:title" content="Green Tech Futures Hackathon, Climate Week NYC 2026" />
+  <meta property="og:description" content="Leave your fingerprint in the climate tech sector." />
 
   <style>
+    /* ============================================================
+       HOPAMINE VISUAL LANGUAGE v1.0
+       No Google Fonts (§8) — not even as placeholders. The brand
+       faces load from /fonts/ when supplied; until then a neutral
+       system stack carries the page.
+         fonts/Bootzy.woff2          T1 display
+         fonts/GrotalismBlack.woff2  T1 alternate — CAPS ONLY (§1.4)
+         fonts/Glamour.woff2         cursive overlay, bilingual
+         fonts/BillaMount.woff2      cursive overlay, EN only
+       ============================================================ */
+    /* Each face resolves in this order:
+         1. local()  — the installed desktop font. On a machine that already
+            has the licensed faces (yours), the real type renders straight
+            away with nothing uploaded.
+         2. url()    — /fonts/ in the deploy, several filename spellings, so
+            whatever the pack is actually called just works.
+         3. fallback — an OS-licensed stack. NEVER a Google face (R15). */
+    /* SUPPLIED FACES — subset to Latin-1 and converted to WOFF2.
+       local() still wins on a machine carrying the desktop originals. */
+    @font-face {
+      font-family: "Bootzy";                       /* §1.1 T1 display */
+      /* Subset to CAPS + digits + punctuation: every Bootzy-set element is
+         text-transform:uppercase and .stat__num is numerals, so the lowercase
+         can never render. This forecloses §1.3's lowercase-i signature move
+         until the full file is shipped. */
+      src: local("Bootzy TM"), local("BootzyTM"), local("Bootzy"),
+           url("fonts/Bootzy.woff2") format("woff2");
+      font-display: swap;
+    }
+    /* §9 OPEN ITEM CLOSED — the micro tier was "specified but never supplied",
+       so there was no reading tier. It is supplied now. Two real weights, so
+       the 700 below is drawn, not synthesised by the browser. */
+    @font-face {
+      font-family: "AppleGaramond";                /* §1.1 micro / reading */
+      src: local("Apple Garamond"), local("AppleGaramond"),
+           url("fonts/AppleGaramond.woff2") format("woff2");
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: "AppleGaramond";
+      src: local("Apple Garamond Bold"), local("AppleGaramond-Bold"),
+           url("fonts/AppleGaramondBold.woff2") format("woff2");
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+    /* §1.1/§1.6 — Billa Mount is the ENGLISH-ONLY script: 150 glyphs and
+       physically no French accents (verified on the supplied file). It leads
+       the cursive stack because the live copy is English. CSS font matching
+       is per-character, so if French copy is ever added the accented glyphs
+       fall through to Glamour automatically — which is the guide's language
+       split enforced by the cascade rather than by remembering. */
+    @font-face {
+      font-family: "BillaMount";                   /* §1.1 cursive, EN only */
+      src: local("Billa Mount"), local("BillaMount-Regular"),
+           url("fonts/BillaMount.woff2") format("woff2");
+      font-display: swap;
+    }
+    /* NOT SUPPLIED: Grotalism Black (§1.4 T1 alternate) and Glamour (§1.1
+       bilingual cursive). Declared so they light up the moment the files
+       land; neither is requested until a glyph actually needs one. */
+    @font-face {
+      font-family: "Grotalism";                    /* §1.4 CAPS ONLY */
+      src: local("Grotalism Black"), local("GrotalismBlack"),
+           url("fonts/GrotalismBlack.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Glamour";                      /* §1.1 bilingual cursive */
+      src: local("Glamour"), url("fonts/Glamour.woff2") format("woff2");
+      font-display: swap;
+    }
+
     :root {
-      --ink:    #08201C;  /* hero + dark sections */
-      --ink-2:  #123B33;  /* proof band */
-      --paper:  #E9EFE9;  /* body background */
-      --blue:   #5BC2E7;  /* Hopamine blue — CTAs, stats, accents */
-      --green:  #4CA65A;  /* solarpunk green — timeline markers, labels */
+      /* §2.1 — the wheel. Derived from Hopamine Blue 196°, not picked. */
+      --blue:   #5BC2E7;   /* 196° — the main brand colour */
+      --cobalt: #115F9C;   /* 206° deep — ground */
+      --pink:   #E849BE;   /* 316° triadic — accent, cursive overlays */
+      --lime:   #B2D651;   /* 76° triadic — ground */
+      --coral:  #E5805B;   /* 16° complement — accent */
+      --green:  #3E8E5A;   /* action — CTAs, numerals, nothing else (§2.5) */
+      --ink:    #161616;
+      --cream:  #F2EFE8;
+      --white:  #FFFFFF;
 
-      --paper-dim: #dbe4db;
-      --ink-soft:  rgba(233, 239, 233, 0.72);
-      --ink-faint: rgba(233, 239, 233, 0.46);
+      --t1:    "Bootzy", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --t1alt: "Grotalism", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      /* EN copy → Billa Mount; any accented glyph falls through to Glamour
+         when supplied, per the §1.6 language split. */
+      --script:"BillaMount", "Glamour", "Snell Roundhand", "Apple Chancery", cursive;
+      /* R17 — the micro tier is a SERIF that must match Bootzy's density. */
+      --micro: "AppleGaramond", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
 
-      --serif: "Fraunces", Georgia, "Times New Roman", serif;
-      --sans:  "Barlow Condensed", "Helvetica Neue", Arial, sans-serif;
+      /* §1.2 / R17 tracking */
+      /* DIRECTED DEVIATION from §1.2/§8: global T1 tracking loosened from
+         −5.5% to −2.0% so the I reads. §8 rejects global loosening (+13%
+         width on every headline); doing it on instruction. The per-pair
+         solver below is kept and its target raised, so I-boundaries still
+         get relief ON TOP of the looser global track. */
+      --track-t1:    -0.020em;
+      --track-t1alt: -0.090em;  /* Grotalism floor — unchanged */
+      --track-micro: -0.030em;  /* §1.2 — micro CAPS */
+      --track-read:  -0.020em;  /* R17 — serif reading tier */
 
-      --maxw: 1160px;
-      --gutter: clamp(1.25rem, 5vw, 4rem);
+      /* Three type sizes max (§7) */
+      --size-display: clamp(2.7rem, 7.4vw, 5.6rem);
+      --size-sub:     clamp(1.4rem, 2.7vw, 2.1rem);
+      /* Garamond (micro tier) doubled on instruction: 0.95rem → 1.9rem for
+         the caps labels, and the reading tier doubled alongside it. */
+      --size-micro:   1.9rem;
+      --size-read:    2.12rem;   /* was 1.06rem */
+
+      /* §4.1 — footer logo height ≥1.33× micro TEXT size; default 1.55× */
+      --logo-h: calc(var(--size-micro) * 1.55);
+
+      --maxw: 1180px;
+      --gutter: clamp(1.25rem, 5.7vw, 4rem);   /* §3.1 margin 5.7% */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
     body {
-      background: var(--paper);
+      background: var(--cream);
       color: var(--ink);
-      font-family: var(--sans);
-      font-size: 18px;
+      font-family: var(--micro);
+      font-size: 21px;
       line-height: 1.55;
+      letter-spacing: var(--track-read);   /* R17 — micro tier tracks tight */
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
 
-    /* Fraunces optical / stylistic settings — SOFT 40 / WONK 1 */
-    h1, h2, h3, .display, .eyebrow-num {
-      font-family: var(--serif);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-      font-weight: 500;
-      line-height: 1.02;
-      letter-spacing: -0.015em;
+    /* R17 — justified serif reading tier. Word space is solved to 0.86×
+       the face's natural space in JS; the 1.5× guard drops a paragraph to
+       flush-left rather than letting rivers open. */
+    .read { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+    .read.is-flush { text-align: left; }
+
+    /* §1.5 — type never overlaps vertically; blocks are chained by
+       margin, never absolutely positioned. */
+    .t1 {
+      font-family: var(--t1);
+      text-transform: uppercase;
+      letter-spacing: var(--track-t1);
+      font-weight: 700;
+      line-height: 0.94;
+      font-size: var(--size-display);
+    }
+    .t1-sub { font-size: var(--size-sub); line-height: 1.04; }
+    /* R16 — stacked display lines are chained, never absolutely positioned.
+       The line-height here is only a pre-paint floor; the true advance is
+       derived per line pair from ink bounding boxes at runtime. */
+    .t1-stack .t1-line { display: block; line-height: 1; }
+
+    .t1-alt {
+      font-family: var(--t1alt);
+      text-transform: uppercase;
+      letter-spacing: var(--track-t1alt);
+      font-weight: 900;
+      line-height: 0.96;
+    }
+
+    /* §1.6 — cursive overlay: second colour, whole word, leads with a
+       capital. Never a drop-cap on a multi-letter word (§1.7, §8). */
+    .script {
+      font-family: var(--script);
+      text-transform: none;
+      letter-spacing: -0.005em;
+      color: var(--pink);
+      font-weight: 400;
+      font-size: 1.18em;
+      line-height: 0.8;
+      padding-inline: 0.06em;
+    }
+
+    .micro {
+      font-family: var(--t1);
+      text-transform: uppercase;
+      letter-spacing: var(--track-micro);
+      font-weight: 700;
+      font-size: var(--size-micro);
     }
 
     .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--gutter); }
-
     section { position: relative; }
-
-    /* Eyebrow / kicker */
-    .eyebrow {
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-weight: 600;
-      font-size: 0.82rem;
-    }
-
     a { color: inherit; }
 
-    /* ---- Buttons ---- */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 600;
-      font-size: 1.02rem;
-      text-decoration: none;
-      padding: 1rem 1.9rem;
-      border-radius: 2px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    /* §2.5 — stamp mark: number in an outlined oval + two solid accent
+       dots. The cluster is what makes a series read as a series. */
+    .stamp { display: inline-flex; align-items: center; gap: 0.45rem; }
+    .stamp__n {
+      font-size: 1.05rem; font-weight: 700; letter-spacing: var(--track-micro);
+      border: 1.5px solid currentColor; border-radius: 999px;
+      padding: 0.15rem 0.7rem; line-height: 1.3;
     }
-    .btn-primary {
-      background: var(--blue);
-      color: var(--ink);
-      box-shadow: 0 0 0 0 rgba(91, 194, 231, 0.5);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px -14px rgba(91, 194, 231, 0.75);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--ink);
-      border-color: rgba(8, 32, 28, 0.28);
-    }
-    .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+    .stamp__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 
-    .btn .arrow { font-family: var(--sans); font-weight: 400; transition: transform 0.18s ease; }
-    .btn:hover .arrow { transform: translateX(4px); }
-
-    /* =====================================================
-       HERO
-       ===================================================== */
-    .hero {
-      background: var(--ink);
-      color: var(--paper);
-      min-height: 92vh;
-      display: flex;
-      align-items: center;
-      padding-block: clamp(5rem, 12vh, 9rem);
-      overflow: hidden;
+    /* §6 — grain: 3.2–4.2% monochrome noise on the canvas, NEVER on type.
+       Lives on the background layer, under all content. */
+    .grain::before {
+      content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0.038;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* Signature dot-matrix halftone, masked to a horizon glow.
-       Two dot layers of different scale sit over a low radial glow;
-       a mask fades the dots so they read as light rising off a horizon. */
-    .hero__halftone {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .hero__halftone::before,
-    .hero__halftone::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-    }
-    /* coarse dots */
-    .hero__halftone::before {
-      background-image: radial-gradient(circle at center, var(--blue) 1.35px, transparent 1.6px);
-      background-size: 22px 22px;
-      background-position: 0 0;
-      opacity: 0.9;
-      -webkit-mask-image: radial-gradient(120% 78% at 78% 118%, #000 0%, rgba(0,0,0,0.85) 26%, transparent 60%);
-              mask-image: radial-gradient(120% 78% at 78% 118%, #000 0%, rgba(0,0,0,0.85) 26%, transparent 60%);
-    }
-    /* fine dots, offset for a dithered feel */
-    .hero__halftone::after {
-      background-image: radial-gradient(circle at center, var(--green) 1px, transparent 1.3px);
-      background-size: 11px 11px;
-      background-position: 5px 5px;
-      opacity: 0.55;
-      -webkit-mask-image: radial-gradient(130% 70% at 82% 122%, #000 0%, rgba(0,0,0,0.7) 30%, transparent 62%);
-              mask-image: radial-gradient(130% 70% at 82% 122%, #000 0%, rgba(0,0,0,0.7) 30%, transparent 62%);
-    }
-    /* soft horizon glow underneath the dots */
-    .hero__glow {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(90% 55% at 80% 120%, rgba(91,194,231,0.20), rgba(76,166,90,0.10) 40%, transparent 68%);
-    }
+    /* §6 — halftone: 45°, coarse, ~8px dot; the dot must be visible.
+       §3.3 — one continuous plane, never cropped for framing. Oversized
+       and rotated so the screen angle is a true 45°. */
+    /* §3.3 — BACKGROUND ASSETS ARE ONE CONTINUOUS PLANE.
+       The asset is never cropped for framing and never cut by a panel.
+       Both the halftone lattice and the photo plate are positioned against
+       the DOCUMENT (offsets injected per section at runtime), so the same
+       organism runs edge to edge and reads on both sides of every seam.
+       Panels change its COLOUR and OPACITY only — never its geometry.
+       No vignette mask: the plane must reach all four canvas edges.
 
-    .hero .wrap { position: relative; z-index: 1; }
+       §6 — halftone at a true 45°: two identical lattices offset by half a
+       cell form a diagonal screen, so the dot pitch is 11/√2 ≈ 7.8px — the
+       coarse, visible dot. (65 lpi was the spec error; do not go finer.)
 
-    .hero__eyebrow {
-      color: var(--blue);
-      margin-bottom: 1.9rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 0.9rem;
-      align-items: center;
+       Photo plate: drop the files in and they light up automatically —
+       a missing background image simply no-ops, it cannot break the page. */
+    /* HALFTONE REMOVED on instruction — the dot lattice is gone. The plane
+       itself stays (still one continuous organism per §3.3) so the photo
+       plates light up the moment the asset files land; with no photo it
+       renders nothing, which is the intended clean ground. */
+    .plane {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      opacity: var(--plane-op, 0.24);            /* band 15–30%, asserted */
+      background-image: var(--plane-photo, none);
+      background-repeat: no-repeat;
+      background-size: var(--plane-photo-size, cover);
+      background-position: center var(--plane-photo-y, 0px);
     }
-    .hero__eyebrow .dot { color: var(--green); opacity: 0.8; }
+    /* §3.4 asset semiotics — which organism belongs to which field.
+       Realism required; these are photographic plates, never illustration. */
+    .hero        { --plane-ink: var(--blue); --plane-op: 0.24; --plane-photo: url("assets/dendrite.jpg"); }
+    .runs        { --plane-ink: var(--blue); --plane-op: 0.20; --plane-photo: url("assets/mycelial.jpg"); }
+    .proof       { --plane-ink: var(--ink);  --plane-op: 0.16; }
+    /* Cream zone — same organism, dropped to ink at the band floor so the
+       reading tier stays legible. Colour/opacity change only (§3.3). */
+    .thesis      { --plane-ink: var(--ink);  --plane-op: 0.15; }
+    .leave       { --plane-ink: var(--ink);  --plane-op: 0.15; }
+    .apply__band { --plane-ink: var(--blue); --plane-op: 0.28; --plane-photo: url("assets/roots.jpg"); }
+    .apply       { --plane-ink: var(--blue); --plane-op: 0.22; --plane-photo: url("assets/roots.jpg"); }
 
-    .hero h1 {
-      font-size: clamp(3.1rem, 8.5vw, 6.6rem);
-      max-width: 15ch;
-      margin-bottom: 1.6rem;
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--blue);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-    }
-
-    .hero__lede {
-      font-size: clamp(1.15rem, 2.4vw, 1.5rem);
-      max-width: 46ch;
-      color: var(--ink-soft);
-      margin-bottom: 2.6rem;
-      line-height: 1.5;
-    }
-
-    .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
-    .hero .btn-ghost { color: var(--paper); border-color: rgba(233,239,233,0.35); }
-    .hero .btn-ghost:hover { border-color: var(--paper); }
-    .hero__deadline {
-      font-size: 0.98rem;
-      letter-spacing: 0.04em;
-      color: var(--ink-faint);
-    }
-    .hero__deadline strong { color: var(--paper); font-weight: 600; }
-
-    /* =====================================================
-       THESIS
-       ===================================================== */
-    .thesis { padding-block: clamp(5rem, 11vh, 8.5rem); }
-    .thesis__grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: start;
-    }
-    .thesis h2 {
-      font-size: clamp(2rem, 4.6vw, 3.5rem);
-      max-width: 16ch;
-    }
-    .thesis h2 em { font-style: italic; color: var(--green); }
-    .thesis__body p { font-size: 1.12rem; color: rgba(8,32,28,0.82); margin-bottom: 1.1rem; max-width: 44ch; }
-    .thesis__body p:last-child { margin-bottom: 0; }
-    .rule { height: 1px; background: rgba(8,32,28,0.14); border: 0; margin: 0; }
-
-    /* =====================================================
-       WHAT YOU LEAVE WITH
-       ===================================================== */
-    .leave { padding-block: clamp(4.5rem, 10vh, 8rem); }
-    .section-label {
-      color: var(--green);
-      margin-bottom: 3rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-label::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: rgba(8,32,28,0.16);
-    }
-    .leave__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: clamp(1.5rem, 3vw, 2.4rem);
-    }
-    .leave__item {
-      border-top: 2px solid var(--ink);
-      padding-top: 1.2rem;
-    }
-    .leave__num {
-      font-family: var(--serif);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-      font-size: 1.4rem;
-      color: var(--blue);
-      display: block;
-      margin-bottom: 1rem;
-    }
-    .leave__item h3 { font-size: 1.5rem; line-height: 1.08; margin-bottom: 0; }
-    .leave__item p { font-size: 1rem; color: rgba(8,32,28,0.7); margin-top: 0.7rem; }
-
-    /* =====================================================
-       HOW IT RUNS — timeline
-       ===================================================== */
-    .runs {
-      background: var(--ink);
-      color: var(--paper);
-      padding-block: clamp(5rem, 11vh, 8.5rem);
-    }
-    .runs .section-label { color: var(--green); }
-    .runs .section-label::after { background: rgba(233,239,233,0.2); }
-    .timeline { border-top: 1px solid rgba(233,239,233,0.16); }
-    .t-row {
-      display: grid;
-      grid-template-columns: 0.6fr 1.4fr;
-      gap: clamp(1rem, 4vw, 3rem);
-      padding-block: 1.9rem;
-      border-bottom: 1px solid rgba(233,239,233,0.16);
-      align-items: baseline;
-      transition: background 0.2s ease;
-    }
-    .t-row:hover { background: rgba(233,239,233,0.03); }
-    .t-date {
-      font-family: var(--serif);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-      font-size: clamp(1.3rem, 2.6vw, 1.9rem);
-      color: var(--blue);
-      display: flex;
-      align-items: baseline;
-      gap: 0.9rem;
-    }
-    .t-date .marker {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--green);
+    /* Hero emphasis word. §1.6 sanctions a script face overlapping the
+       caps line as a stylistic header; the skew is what buys the overlap
+       room. Overlap is CAPPED AT 25% of the adjacent glyph, measured at
+       runtime against real advances, so it never turns into clutter. */
+    .emph {
+      font-family: var(--script);
+      text-transform: none;
+      color: var(--pink);
+      font-size: 1.55em;
+      line-height: 0.82;
+      letter-spacing: -0.005em;
       display: inline-block;
-      flex: none;
-      transform: translateY(-2px);
+      vertical-align: baseline;
+      position: relative;
+      z-index: 2;
     }
-    .t-row.is-live .t-date .marker {
-      background: var(--blue);
-      box-shadow: 0 0 0 0 rgba(91,194,231,0.6);
-      animation: pulse 2.2s infinite;
+
+    /* Team block: up to five name + email pairs, revealed by the toggle. */
+    .team-block[hidden] { display: none; }
+    .team-rows { display: flex; flex-direction: column; gap: 0.7rem; }
+    .team-row { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0.7rem; }
+    .team-row .idx {
+      font-size: 0.95rem; font-weight: 700; color: var(--blue);
+      letter-spacing: var(--track-micro); align-self: center;
     }
+    @media (max-width: 620px) { .team-row { grid-template-columns: 1fr; } }
+
+    .layer { position: relative; z-index: 1; }
+
+    /* §2.5 — the action colour marks the clickable and the countable. */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--micro); text-transform: uppercase;
+      letter-spacing: var(--track-micro); font-weight: 700;
+      font-size: 1.18rem; text-decoration: none;
+      padding: 1.05rem 2rem; border: 2px solid transparent; border-radius: 2px;
+      cursor: pointer; transition: transform 0.16s ease, background 0.16s ease;
+    }
+    .btn-action { background: var(--green); color: var(--white); }
+    .btn-action:hover { transform: translateY(-2px); background: #47a267; }
+    .btn-line { background: transparent; border-color: currentColor; }
+    .btn-line:hover { transform: translateY(-2px); }
+    .btn .arrow { transition: transform 0.16s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+    .btn[disabled] { opacity: 0.55; cursor: default; transform: none; }
+
+    /* ===== HERO — INK colourway (§2.2: blue = display type + plane) ===== */
+    .hero {
+      background: var(--ink); color: var(--cream);
+      min-height: 94vh; display: flex; align-items: center;
+      padding-block: clamp(5rem, 12vh, 9rem); overflow: hidden;
+    }
+    .hero__eyebrow { color: var(--blue); margin-bottom: 2.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
+    .hero__eyebrow .sep { color: var(--green); font-family: var(--micro); }
+    .hero h1 { max-width: 15ch; margin-bottom: 1.7rem; color: var(--white); }
+    /* §3.2 — one dominant void, ≥25% of the canvas, unbroken. */
+    .hero__lede {
+      font-size: clamp(1.55rem, 2.9vw, 2.1rem); max-width: 34ch;
+      color: rgba(242,239,232,0.76); margin-bottom: 2.8rem;
+    }
+    /* Plain-language walkthrough of what actually happens, for readers who
+       do not already know what a hackathon weekend looks like. */
+    .hero__steps {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: baseline;
+      max-width: 46ch; margin-bottom: 2.4rem;
+      font-size: 1.25rem; color: rgba(242,239,232,0.66);
+      text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
+    }
+    .hero__steps .step-sep { color: var(--green); }
+    .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+    .hero .btn-line { color: var(--cream); }
+    .hero__deadline { font-family: var(--t1); font-size: 1.2rem; color: rgba(242,239,232,0.55); letter-spacing: var(--track-micro); text-transform: uppercase; font-weight: 700; }
+    .hero__deadline strong { color: var(--blue); }
+
+    /* ===== Blue panel — blue prominent in the cream colourway (§2.2) ===== */
+    .bluebar { background: var(--blue); color: var(--ink); padding-block: 1.15rem; overflow: hidden; }
+    .bluebar .wrap { display: flex; flex-wrap: wrap; gap: 0.6rem 2.2rem; align-items: center; }
+    .bluebar .micro { color: var(--ink); font-size: 1.25rem; }   /* §2.4 micro picks INK on blue: 9.7:1 */
+
+    /* ===== THESIS — cream ===== */
+    /* Page two — the statement now owns the screen. Single column, set
+       large enough to BE the composition rather than support it, and the
+       section holds a near-full viewport. */
+    .thesis {
+      padding-block: clamp(4rem, 10vh, 7rem);
+      min-height: 96vh;
+      display: flex;
+      align-items: center;
+    }
+    .thesis__grid { display: grid; grid-template-columns: 1fr; gap: clamp(1.8rem, 4vw, 3rem); align-items: start; }
+    .thesis h2 { max-width: 18ch; color: var(--cobalt); font-size: clamp(2.9rem, 7.6vw, 6rem); line-height: 0.95; }
+    .thesis__body p {
+      font-size: clamp(1.7rem, 3.4vw, 2.9rem);
+      line-height: 1.22;
+      color: rgba(22,22,22,0.86);
+      margin-bottom: 0.85em;
+      max-width: 30ch;
+    }
+    .thesis__body p:last-child { margin-bottom: 0; }
+
+    /* ===== WHAT YOU LEAVE WITH — cream ===== */
+    .leave { padding-block: clamp(4rem, 9vh, 7rem); }
+    .section-label { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.8rem; color: var(--cobalt); }
+    .section-label::after { content: ""; flex: 1; height: 1.5px; background: rgba(22,22,22,0.16); }
+    .leave__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(2rem, 4vw, 3.2rem) clamp(2.5rem, 5vw, 4.5rem); }
+    .leave__item { border-top: 2.5px solid var(--ink); padding-top: 1.1rem; }
+    /* numerals are "countable" — action colour is legal here (§2.5) */
+    .leave__num { font-weight: 700; font-size: 0.85rem; letter-spacing: var(--track-micro); color: var(--green); display: block; margin-bottom: 0.9rem; }
+    .leave__item h3 { font-family: var(--t1); text-transform: uppercase; letter-spacing: var(--track-micro); font-size: 1.4rem; line-height: 1.15; font-weight: 700; }
+    .leave__item p { font-size: 1.28rem; color: rgba(22,22,22,0.7); margin-top: 0.6rem; max-width: 46ch; }
+
+    /* ===== HOW IT RUNS — COBALT colourway (white micro clears 6.7:1) ===== */
+    .runs { background: var(--cobalt); color: var(--white); padding-block: clamp(4.5rem, 10vh, 7.5rem); overflow: hidden; }
+    .runs .section-label { color: var(--blue); }
+    .runs .section-label::after { background: rgba(255,255,255,0.24); }
+    .timeline { border-top: 1.5px solid rgba(255,255,255,0.22); }
+    .t-row {
+      display: grid; grid-template-columns: 0.62fr 1.38fr;
+      gap: clamp(0.9rem, 4vw, 3rem); padding-block: 1.75rem;
+      border-bottom: 1.5px solid rgba(255,255,255,0.22); align-items: baseline;
+    }
+    .t-date {
+      font-family: var(--t1);
+      text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem); color: var(--blue);
+      display: flex; align-items: baseline; gap: 0.75rem;
+    }
+    .t-date .marker { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.4); flex: none; transform: translateY(-2px); }
+    .t-row.is-live .t-date .marker { background: var(--blue); box-shadow: 0 0 0 0 rgba(91,194,231,0.7); animation: pulse 2.4s infinite; }
     @keyframes pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(91,194,231,0.55); }
-      70%  { box-shadow: 0 0 0 8px rgba(91,194,231,0); }
+      0%   { box-shadow: 0 0 0 0 rgba(91,194,231,0.6); }
+      70%  { box-shadow: 0 0 0 9px rgba(91,194,231,0); }
       100% { box-shadow: 0 0 0 0 rgba(91,194,231,0); }
     }
-    .t-body h3 { font-size: 1.55rem; margin-bottom: 0.35rem; }
-    .t-body p { color: var(--ink-soft); font-size: 1.02rem; max-width: 52ch; }
+    .t-body h3 { font-family: var(--t1); text-transform: uppercase; letter-spacing: var(--track-micro); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .t-venue { font-family: var(--t1); font-size: 1.2rem; font-weight: 700; letter-spacing: var(--track-micro); text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
+    .t-body p { color: rgba(255,255,255,0.78); font-size: 1.28rem; max-width: 46ch; }
     .t-tag {
-      display: inline-block;
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--green);
-      border: 1px solid rgba(76,166,90,0.5);
-      border-radius: 2px;
-      padding: 0.15rem 0.55rem;
-      margin-top: 0.75rem;
+      display: inline-block; text-transform: uppercase; letter-spacing: var(--track-micro);
+      font-size: 0.95rem; font-weight: 700; color: var(--ink); background: var(--blue);
+      border-radius: 999px; padding: 0.2rem 0.7rem; margin-top: 0.7rem;
     }
 
-    /* =====================================================
-       PROOF BAND
-       ===================================================== */
-    .proof {
-      background: var(--ink-2);
-      color: var(--paper);
-      padding-block: clamp(4rem, 9vh, 6.5rem);
-    }
-    .proof__head { color: var(--blue); margin-bottom: 2.6rem; }
-    .proof__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(1.5rem, 4vw, 3rem);
-    }
+    /* ===== PROOF — BLUE colourway. §2.4: white display (2.0:1, display
+       only) + INK micro (9.7:1, clears the reading floor). ===== */
+    .proof { background: var(--blue); color: var(--ink); padding-block: clamp(3.5rem, 8vh, 6rem); overflow: hidden; }
+    .proof .section-label { color: var(--ink); }
+    .proof .section-label::after { background: rgba(22,22,22,0.22); }
+    .proof__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.4rem, 4vw, 3rem); }
     .stat__num {
-      font-family: var(--serif);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-      font-weight: 600;
-      font-size: clamp(3.2rem, 8vw, 5.6rem);
-      color: var(--blue);
-      line-height: 0.95;
+      font-family: var(--t1); font-weight: 700; letter-spacing: var(--track-t1);
+      font-size: clamp(3rem, 7.6vw, 5.2rem); line-height: 0.92; color: var(--white);
     }
-    .stat__label {
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--ink-soft);
-      margin-top: 0.7rem;
-    }
-    .proof__foot {
-      margin-top: 2.8rem;
-      padding-top: 1.6rem;
-      border-top: 1px solid rgba(233,239,233,0.16);
-      color: var(--ink-faint);
-      font-size: 1rem;
-      letter-spacing: 0.03em;
-    }
-    .proof__foot strong { color: var(--green); font-weight: 600; }
+    .stat__label { font-family: var(--t1); text-transform: uppercase; letter-spacing: var(--track-micro); font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-top: 0.5rem; }
+    .proof__foot { margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1.5px solid rgba(22,22,22,0.22); font-size: 1.2rem; color: rgba(22,22,22,0.75); }
+    .proof__foot strong { color: var(--ink); }
 
-    /* =====================================================
-       APPLY — form
-       ===================================================== */
-    .apply {
-      background: var(--ink);
-      color: var(--paper);
-      padding-block: clamp(5rem, 12vh, 9rem);
-    }
-    .apply__prize { display: inline-block; color: var(--green); margin-bottom: 1.6rem; }
-    .apply h2 {
-      font-size: clamp(2.4rem, 6vw, 4.4rem);
-      max-width: 16ch;
-      margin-bottom: 1.2rem;
-    }
-    .apply h2 em { font-style: italic; color: var(--blue); }
-    .apply__sub {
-      font-size: 1.15rem;
-      color: var(--ink-soft);
-      max-width: 46ch;
-      margin-bottom: 3rem;
-    }
+    /* ===== APPLY — INK ground; micro tier is cream (15.8:1) ===== */
+    .apply { background: var(--ink); color: var(--cream); padding-block: clamp(4.5rem, 11vh, 8rem); overflow: hidden; }
+    .apply__prize { display: inline-block; color: var(--green); margin-bottom: 1.5rem; }
+    .apply h2 { max-width: 24ch; margin-bottom: 1.4rem; color: var(--white); font-size: clamp(2rem, 4.6vw, 3.5rem); line-height: 1.05; }
+    .apply h2 .blue { color: var(--blue); }
+    .apply__brief { font-size: 1.35rem; color: rgba(242,239,232,0.72); max-width: 52ch; margin-bottom: 2.6rem; }
+    .apply__limit { color: var(--blue); white-space: nowrap; }
+    .apply__sub { font-size: var(--size-read); color: rgba(242,239,232,0.76); max-width: 46ch; margin-bottom: 1.1rem; }
 
-    .apply__form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.6rem 1.8rem;
-      max-width: 760px;
+    /* R18 — the reference pattern (carousel 001 / slide 05).
+       Full-bleed halftone band across the top third, HARD SEAM: no fade,
+       no margin, no rounded corner. Type owns the rest. */
+    /* Band tightened to the word: the air above "Registration" now mirrors
+       the air below it. Hard seam preserved (no margin, no radius). */
+    .apply__band {
+      background: var(--cobalt);
+      position: relative;
+      overflow: hidden;
+      padding-block: 1.15rem;
+      margin: 0;
+      border-radius: 0;
     }
-    .field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .apply__band .plane { opacity: 0.30; }
+    .apply__band .band__mark { position: relative; z-index: 1; display: block; color: var(--blue); }
+
+    /* Registration bar, bottom left · count, bottom right (R18). */
+    .reg-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem 2rem; flex-wrap: wrap;
+      margin-top: 3.2rem; padding-top: 1.2rem;
+      border-top: 1.5px solid rgba(242,239,232,0.22);
+    }
+    .reg-marks { display: flex; align-items: center; gap: 0.55rem; }
+    .reg-marks svg { display: block; width: 15px; height: 15px; }
+    .reg-marks svg * { stroke: var(--blue); }
+    .reg-bar__label { color: rgba(242,239,232,0.55); font-size: 1.1rem; }
+    .reg-bar__count { color: var(--blue); font-size: 1.1rem; }
+
+    .apply__form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1.7rem; max-width: 780px; }
+    .field { display: flex; flex-direction: column; gap: 0.45rem; }
     .field--full { grid-column: 1 / -1; }
-    .field label {
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--green);
+    .field label { font-family: var(--t1); text-transform: uppercase; letter-spacing: var(--track-micro); font-size: 1.05rem; font-weight: 700; color: var(--blue); }
+    .field input, .field select {
+      font-family: var(--micro); font-size: 1.02rem; color: var(--ink);
+      background: var(--cream); border: 2px solid transparent; border-radius: 2px;
+      padding: 0.85rem 1rem; width: 100%;
+      transition: border-color 0.14s ease, box-shadow 0.14s ease;
     }
-    .field input,
-    .field select {
-      font-family: var(--sans);
-      font-size: 1.05rem;
-      color: var(--ink);
-      background: var(--paper);
-      border: 1px solid transparent;
-      border-radius: 2px;
-      padding: 0.85rem 1rem;
-      width: 100%;
-      transition: box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-    .field input::placeholder { color: rgba(8,32,28,0.4); }
-    .field input:focus,
-    .field select:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(91,194,231,0.35);
+    .field input::placeholder { color: rgba(22,22,22,0.42); }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(91,194,231,0.4);
     }
     .field select {
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2308201C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23161616' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem;
     }
-    .hint { font-size: 0.9rem; color: var(--ink-faint); margin-top: 0.1rem; }
-    .hint strong { color: var(--paper); font-weight: 600; }
+    .hint { font-size: 1.15rem; color: rgba(242,239,232,0.55); }
+    .hint strong { color: var(--blue); }
 
-    /* Solo / Team toggle */
-    .toggle {
-      display: inline-flex;
-      border: 1px solid rgba(233,239,233,0.3);
-      border-radius: 3px;
-      padding: 3px;
-      gap: 3px;
-      width: max-content;
-    }
+    .toggle { display: inline-flex; border: 2px solid rgba(242,239,232,0.28); border-radius: 3px; padding: 3px; gap: 3px; width: max-content; }
     .toggle__opt {
-      font-family: var(--sans);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      background: transparent;
-      border: 0;
-      border-radius: 2px;
-      padding: 0.6rem 1.6rem;
-      cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease;
+      text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
+      font-size: 1.15rem; color: rgba(242,239,232,0.72); background: transparent;
+      border: 0; border-radius: 2px; padding: 0.6rem 1.7rem; cursor: pointer;
+      font-family: var(--micro); transition: background 0.14s ease, color 0.14s ease;
     }
     .toggle__opt.is-active { background: var(--blue); color: var(--ink); }
 
-    .apply__actions {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 1.6rem;
-      margin-top: 0.6rem;
-    }
-    .apply__note { font-size: 0.95rem; color: var(--ink-faint); letter-spacing: 0.03em; }
-    .apply__note strong { color: var(--paper); font-weight: 600; }
+    .apply__actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: 0.5rem; }
+    .apply__note { font-family: var(--t1); font-size: 1.15rem; color: rgba(242,239,232,0.55); text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700; }
+    .apply__note strong { color: var(--blue); }
+    .form-msg { grid-column: 1 / -1; font-size: 1rem; min-height: 1.2em; }
+    .form-msg.is-ok  { color: var(--blue); }
+    .form-msg.is-err { color: var(--coral); }
 
-    .form-msg { grid-column: 1 / -1; font-size: 1rem; min-height: 1.2em; margin-top: 0.2rem; }
-    .form-msg.is-ok  { color: var(--green); }
-    .form-msg.is-err { color: #ff9a8a; }
-    .btn[disabled] { opacity: 0.6; cursor: default; transform: none; }
+    /* ===== FOOTER — logo row. §4.1: height ≥1.33× micro TEXT size,
+       default 1.55×, floor asserted. §4.2: full opacity, on the ground,
+       never boxed (§8), never ghosted (§8). ===== */
+    footer { background: var(--ink); color: rgba(242,239,232,0.55); padding-block: 2.6rem; }
+    .footer__grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.6rem 2rem; }
+    .footer__logos { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; }
+    .footer__logos img.logo {
+      height: var(--logo-h);
+      min-height: calc(var(--size-micro) * 1.33);   /* the asserted floor */
+      width: auto; display: block; opacity: 1;
+    }
+    .logo-fallback {
+      text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
+      font-size: var(--size-micro); color: var(--cream); line-height: var(--logo-h);
+    }
+    .footer__x { color: var(--blue); font-size: var(--size-micro); }
+    /* §4.4 — sign-off is HOPAMINE alone. */
+    .footer__meta { font-family: var(--t1); font-size: 1.1rem; text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700; }
 
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-    footer {
-      background: var(--ink);
-      color: var(--ink-faint);
-      padding-block: 3rem;
-      font-size: 0.95rem;
-    }
-    .footer__grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-    .footer__brand {
-      font-family: var(--serif);
-      font-variation-settings: "SOFT" 40, "WONK" 1;
-      color: var(--paper);
-      font-size: 1.25rem;
-    }
-    .footer__brand span { color: var(--green); }
-    .footer__meta { letter-spacing: 0.04em; }
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
-    @media (max-width: 860px) {
-      .thesis__grid { grid-template-columns: 1fr; gap: 2rem; }
-      .leave__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.6rem; }
-      .proof__grid { grid-template-columns: 1fr; gap: 2.4rem; text-align: left; }
-      .t-row { grid-template-columns: 1fr; gap: 0.6rem; }
-      .t-date { font-size: 1.5rem; }
+    @media (max-width: 880px) {
+      .thesis__grid { grid-template-columns: 1fr; gap: 1.8rem; }
+      .leave__grid { grid-template-columns: 1fr; gap: 1.9rem; }
+      .proof__grid { grid-template-columns: 1fr; gap: 2rem; }
+      .t-row { grid-template-columns: 1fr; gap: 0.5rem; }
       .apply__form { grid-template-columns: 1fr; }
     }
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
       .leave__grid { grid-template-columns: 1fr; }
-      .hero { min-height: 88vh; }
+      .hero { min-height: 90vh; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .t-row.is-live .t-date .marker { animation: none; }
@@ -525,90 +528,99 @@
 </head>
 <body>
 
-  <!-- ============ HERO ============ -->
-  <header class="hero">
-    <div class="hero__glow"></div>
-    <div class="hero__halftone"></div>
-    <div class="wrap">
-      <p class="eyebrow hero__eyebrow">
-        Climate Week NYC <span class="dot">·</span> Sept 20–27
-        <span class="dot">·</span> Green Jobs Pavilion
+  <!-- ============ HERO , INK colourway ============ -->
+  <header class="hero grain">
+    <div class="plane"></div>
+    <div class="wrap layer">
+      <p class="micro hero__eyebrow">
+        <span class="stamp"><span class="stamp__n">N 01</span><span class="stamp__dot"></span><span class="stamp__dot"></span></span>
+        Climate Week NYC <span class="sep">·</span> Sept 20&ndash;23 <span class="sep">·</span> NYU Campus
       </p>
-      <h1>Build something that&rsquo;s still <em>running</em> when the week ends.</h1>
-      <p class="hero__lede">
+      <h1 class="t1">Build the thing that gets you <span class="emph">Hired</span></h1>
+      <p class="hero__lede read">
         Job-seeking technologists ship tangible climate prototypes against urgent
-        NYC environmental challenges &mdash; scoped for scale from day one, presented
-        live to judges and hiring climate-tech companies.
+        NYC environmental challenges, scoped for scale from day one, presented
+        live to judges, industry vets and hiring climate-tech companies.
+      </p>
+      <p class="hero__steps">
+        <span>Receive a problem statement</span> <span class="step-sep">&rarr;</span>
+        <span>Build your climate tech solution</span> <span class="step-sep">&rarr;</span>
+        <span>Keep it as your startup, your portfolio project, or the thing you want to see in the world</span>
       </p>
       <div class="hero__cta">
-        <a href="#apply" class="btn btn-primary">Apply to build <span class="arrow">&rarr;</span></a>
-        <a href="#how" class="btn btn-ghost">See how it runs</a>
+        <a href="#apply" class="btn btn-action">Apply to build <span class="arrow">&rarr;</span></a>
+        <a href="#how" class="btn btn-line">See how it runs</a>
         <span class="hero__deadline">Applications close <strong>September 1</strong></span>
       </div>
     </div>
   </header>
 
-  <!-- ============ THESIS ============ -->
+  <div class="bluebar">
+    <div class="wrap">
+      <span class="micro">72 hours of build time</span>
+      <span class="micro">90-second video pitch to enter</span>
+      <span class="micro">Sept 20&ndash;23</span>
+    </div>
+  </div>
+
+  <!-- ============ THESIS , cream ============ -->
   <section class="thesis">
-    <div class="wrap thesis__grid">
-      <h2>Most climate hackathons end with a slide. This one ends with <em>something running.</em></h2>
+    <div class="plane"></div>
+    <div class="wrap thesis__grid layer">
+      <h2 class="t1">Leave your fingerprint in the climate tech sector</h2>
       <div class="thesis__body">
-        <p>
-          No ideation theatre. Over 48 hours of build time, post-secondary
-          technologists work in teams against real NYC environmental briefs and
-          leave with a working prototype &mdash; not a concept.
-        </p>
-        <p>
-          Every build is designed for scalability and practicality from the first
-          commit, then presented live to a room of judges and climate-tech companies
-          who are actively hiring.
+        <p class="read">
+          Take a guided leap into the sector you see yourself working in and give
+          your life&rsquo;s mission a head start, period. Think broad. Build fast.
+          Deploy strategically. The future of climate tech is in your hands.
+          Build alongside the torch bearers.
         </p>
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
-
   <!-- ============ WHAT YOU LEAVE WITH ============ -->
   <section class="leave">
-    <div class="wrap">
-      <p class="eyebrow section-label">What you leave with</p>
+    <div class="plane"></div>
+    <div class="wrap layer">
+      <p class="micro section-label">What you leave with</p>
       <div class="leave__grid">
         <div class="leave__item">
-          <span class="leave__num">01</span>
-          <h3>A co-developed NYC climate prototype</h3>
-          <p>A real build against a real brief &mdash; not a napkin sketch.</p>
+          <span class="leave__num">001</span>
+          <h3>Guidance from mentors</h3>
+          <p>One on one guidance from experienced mentors working in the field.</p>
         </div>
         <div class="leave__item">
-          <span class="leave__num">02</span>
+          <span class="leave__num">002</span>
           <h3>Direct contact with recruiting climate-tech companies</h3>
           <p>Present to the people doing the hiring, in the room.</p>
         </div>
         <div class="leave__item">
-          <span class="leave__num">03</span>
-          <h3>Hands-on skills built alongside action-biased peers</h3>
-          <p>Ship shoulder-to-shoulder with people who build, not just talk.</p>
+          <span class="leave__num">003</span>
+          <h3>A finished prototype and a road map on how to scale</h3>
+          <p>Build your demo, then get guided on deploying it in the real world for maximum reach.</p>
         </div>
         <div class="leave__item">
-          <span class="leave__num">04</span>
-          <h3>A finished prototype &amp; deck, portfolio-ready</h3>
-          <p>Walk out with proof of work you can put in front of anyone.</p>
+          <span class="leave__num">004</span>
+          <h3>Additional prizes</h3>
+          <p>To be announced later...</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ HOW IT RUNS ============ -->
-  <section class="runs" id="how">
-    <div class="wrap">
-      <p class="eyebrow section-label">How it runs</p>
+  <!-- ============ HOW IT RUNS , COBALT colourway ============ -->
+  <section class="runs grain" id="how">
+    <div class="plane"></div>
+    <div class="wrap layer">
+      <p class="micro section-label">How it runs</p>
       <div class="timeline">
 
         <div class="t-row">
           <div class="t-date"><span class="marker"></span>Sept 1</div>
           <div class="t-body">
             <h3>Applications close</h3>
-            <p>Enter with a 90-second, YC-style video pitch. That&rsquo;s the whole bar to entry.</p>
+            <p>Enter with a 90-second video pitch, straight to camera, answering why you would be a good fit. That&rsquo;s the whole bar to entry.</p>
           </div>
         </div>
 
@@ -621,28 +633,41 @@
         </div>
 
         <div class="t-row is-live">
+          <div class="t-date"><span class="marker"></span>Sept 20</div>
+          <div class="t-body">
+            <p class="t-venue">NYU Campus</p>
+            <h3>Day one: build begins</h3>
+            <p>Kickoff live on NYU campus, fully in person. Teams meet, take their briefs, and the 72-hour clock starts.</p>
+            <span class="t-tag">In person</span>
+          </div>
+        </div>
+
+        <div class="t-row is-live">
           <div class="t-date"><span class="marker"></span>Sept 21</div>
           <div class="t-body">
-            <h3>Build begins &mdash; in person</h3>
-            <p>Day one kicks off live at the Green Jobs Pavilion. The 48-hour clock starts.</p>
-            <span class="t-tag">In person</span>
+            <p class="t-venue">Human VC Headquarters</p>
+            <h3>Day two: build continues</h3>
+            <p>Hybrid day. Half the team works in person at Human VC Headquarters while the other half builds online.</p>
+            <span class="t-tag">Hybrid</span>
           </div>
         </div>
 
         <div class="t-row is-live">
           <div class="t-date"><span class="marker"></span>Sept 22</div>
           <div class="t-body">
-            <h3>Build continues &mdash; online</h3>
-            <p>Teams keep shipping remotely with mentor check-ins through the second day.</p>
-            <span class="t-tag">Online</span>
+            <p class="t-venue">Human VC Headquarters</p>
+            <h3>Day three: teams alternate</h3>
+            <p>Hybrid again, with the halves swapped. Whoever was online on day two takes the room, and mentor check-ins run throughout.</p>
+            <span class="t-tag">Hybrid</span>
           </div>
         </div>
 
         <div class="t-row is-live">
           <div class="t-date"><span class="marker"></span>Sept 23</div>
           <div class="t-body">
-            <h3>Live pitch &amp; winners announced</h3>
-            <p>Final builds are presented live to judges and hiring climate-tech companies. Winners announced on day three.</p>
+            <p class="t-venue">Project Farmhouse, Green Jobs Pavilion</p>
+            <h3>Live pitch and winners announced</h3>
+            <p>Final builds are presented at Project Farmhouse in the Green Jobs Pavilion. The winner is announced in front of judges, an audience and industry executives.</p>
             <span class="t-tag">Finals</span>
           </div>
         </div>
@@ -651,37 +676,37 @@
     </div>
   </section>
 
-  <!-- ============ PROOF BAND ============ -->
-  <section class="proof">
-    <div class="wrap">
-      <p class="eyebrow proof__head">From the last run</p>
+  <!-- ============ PROOF , BLUE colourway ============ -->
+  <section class="proof grain">
+    <div class="plane"></div>
+    <div class="wrap layer">
+      <p class="micro section-label">From the last run</p>
       <div class="proof__grid">
-        <div class="stat">
-          <div class="stat__num">257</div>
-          <div class="stat__label">Participants</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">58</div>
-          <div class="stat__label">Startups incubated</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">55+</div>
-          <div class="stat__label">Projects submitted</div>
-        </div>
+        <div class="stat"><div class="stat__num">257</div><div class="stat__label">Participants</div></div>
+        <div class="stat"><div class="stat__num">58</div><div class="stat__label">Startups incubated</div></div>
+        <div class="stat"><div class="stat__num">55+</div><div class="stat__label">Projects submitted</div></div>
       </div>
       <p class="proof__foot">Last winning team: <strong>Green Garden</strong>.</p>
     </div>
   </section>
 
-  <!-- ============ APPLY ============ -->
-  <section class="apply" id="apply">
-    <div class="wrap">
-      <p class="eyebrow apply__prize">Prizes to be announced</p>
-      <h2>48 hours. A real brief. Something that <em>runs.</em></h2>
-      <p class="apply__sub">
-        Enter with a 90-second video pitch. Build alongside people who ship.
-        Leave with a prototype and the people hiring for it.
-      </p>
+  <!-- ============ APPLY , INK ground ============ -->
+  <!-- R18 , full-bleed halftone band, top third, hard seam, no margin.
+       (Photo plate goes here when the asset pack lands; the halftone
+       plane carries it until then , §3.3, opacity inside 15–30%.) -->
+  <div class="apply__band">
+    <div class="plane"></div>
+    <div class="wrap layer"><span class="micro band__mark">Registration</span></div>
+  </div>
+
+  <section class="apply grain" id="apply">
+    <div class="plane"></div>
+    <div class="wrap layer">
+      <p class="micro apply__prize">Prizes to be announced</p>
+      <!-- R16 , 2-line Bootzy statement, advance derived from ink boxes -->
+      <h2 class="t1">The future of climate tech is in <span class="blue">your hands.</span></h2>
+      <p class="apply__sub">Apply, build, get guidance, and deploy.</p>
+      <p class="apply__brief">Enter with a 90-second video pitch on why you and your team are the best fit for this hackathon. You do not need a finished idea to apply. <span class="apply__limit">(Limited acceptance. Ten teams.)</span></p>
 
       <form class="apply__form" id="applyForm" novalidate>
         <div class="field">
@@ -710,8 +735,31 @@
           <input type="hidden" name="entryType" id="f-entryType" value="Solo" />
         </div>
 
+        <div class="field field--full team-block" id="teamBlock" hidden>
+          <label>Your team members</label>
+          <p class="hint">Teams are five people. You are the fifth, so list your other four here.</p>
+          <div class="team-rows">
+              <div class="team-row">
+                <input type="text" name="teamName1" placeholder="Member 1 name" autocomplete="off" />
+                <input type="email" name="teamEmail1" placeholder="Member 1 email" autocomplete="off" />
+              </div>
+              <div class="team-row">
+                <input type="text" name="teamName2" placeholder="Member 2 name" autocomplete="off" />
+                <input type="email" name="teamEmail2" placeholder="Member 2 email" autocomplete="off" />
+              </div>
+              <div class="team-row">
+                <input type="text" name="teamName3" placeholder="Member 3 name" autocomplete="off" />
+                <input type="email" name="teamEmail3" placeholder="Member 3 email" autocomplete="off" />
+              </div>
+              <div class="team-row">
+                <input type="text" name="teamName4" placeholder="Member 4 name" autocomplete="off" />
+                <input type="email" name="teamEmail4" placeholder="Member 4 email" autocomplete="off" />
+              </div>
+          </div>
+        </div>
+
         <div class="field">
-          <label for="f-social-platform">Socials &mdash; platform</label>
+          <label for="f-social-platform">Socials, platform</label>
           <select id="f-social-platform" name="socialPlatform">
             <option value="Twitter">Twitter / X</option>
             <option value="Instagram">Instagram</option>
@@ -720,126 +768,427 @@
           </select>
         </div>
         <div class="field">
-          <label for="f-social-link">Socials &mdash; link</label>
+          <label for="f-social-link">Socials, link</label>
           <input id="f-social-link" name="socialLink" type="url" placeholder="https://" />
         </div>
 
         <div class="field field--full">
           <label for="f-video">Video pitch link</label>
           <input id="f-video" name="video" type="url" required placeholder="https://" />
-          <p class="hint">
-            90-second pitch. Paste an unlisted / private YouTube link, or a
-            WeTransfer link with the expiry set to <strong>never</strong>.
-          </p>
+          <p class="hint">90 seconds, YC-style, which just means you talk straight to camera and answer one question: <strong>&ldquo;Why would I be a good fit for this hackathon?&rdquo;</strong> Share your experience, any past hackathon wins, and the project you would ideally build. No slides, no edit, no production needed.</p>
+          <p class="hint">Paste an unlisted / private YouTube link, or a WeTransfer link with the expiry set to <strong>never</strong>.</p>
         </div>
 
         <div class="field field--full apply__actions">
-          <button type="submit" class="btn btn-primary" id="applySubmit">Submit application <span class="arrow">&rarr;</span></button>
+          <button type="submit" class="btn btn-action" id="applySubmit">Submit application <span class="arrow">&rarr;</span></button>
           <p class="apply__note">Applications close <strong>September 1</strong> &middot; Teams announced <strong>September 7</strong></p>
         </div>
 
         <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
       </form>
+
+      <!-- R18 , registration bar bottom-left · count bottom-right -->
+      <div class="reg-bar">
+        <div class="reg-marks" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke-width="1.5"/><path d="M12 0v24M0 12h24" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke-width="1.5"/><path d="M12 0v24M0 12h24" stroke-width="1.5"/></svg>
+          <span class="micro reg-bar__label">Green Tech Futures &middot; Registration</span>
+        </div>
+        <span class="micro reg-bar__count">N 06 / 06</span>
+      </div>
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER , logo row ============ -->
   <footer>
     <div class="wrap footer__grid">
-      <div class="footer__brand">Hopamine <span>&times;</span> Green Jobs Board</div>
-      <div class="footer__meta">Green Tech Futures Hackathon &middot; Climate Week NYC 2026</div>
+      <div class="footer__logos">
+        <!-- Drop the supplied PNGs into /logos/ and they replace the text
+             marks automatically. §4.2: full opacity, on the ground. -->
+        <img class="logo" src="logos/hopamine.png" alt="Hopamine"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+        <span class="footer__x">&times;</span>
+        <img class="logo" src="logos/green-jobs-board.png" alt="Green Jobs Board"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+        <span class="footer__x">&times;</span>
+        <img class="logo" src="logos/seeding-sovereignty.png" alt="Seeding Sovereignty"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+      </div>
+        <div class="footer__meta">Green Tech Futures &middot; Climate Week NYC 2026</div>
     </div>
   </footer>
 
   <script>
-    /* ============================================================
-       The one config line.
-       Paste your Google Apps Script Web App URL between the quotes
-       to record applications into a Google Sheet (setup steps in
-       the handoff notes). Until it is set, the form still validates
-       and thanks the applicant, but nothing is written to a sheet.
-       ============================================================ */
-    const SHEET_ENDPOINT = "";
+  /* ==============================================================
+     §1.3 , THE I RULE. Per-pair solved kerning (Option D).
+     Global tracking stays at −5.5%; at any boundary touching an "I"
+     the gap is opened to exactly −0.020em, solved against the real
+     ink bearings of the loaded face. A FLAT relief is rejected (§8):
+     Bootzy's sidebearings run +0.000 to −0.075em, so a constant
+     fixes some pairs and misses others.
 
-    (function () {
-      var form = document.getElementById("applyForm");
-      if (!form) return;
+     Canvas measureText().actualBoundingBox* gives the same ink-box
+     data the Python reference reads from getbbox().
+     ============================================================== */
+  (function () {
+    /* K must mirror --track-t1. TARGET raised from the spec's −0.020em to
+       +0.030em on instruction: the I now sits in a positive gap, so it reads
+       as a separate stroke instead of a tight stem. */
+    var K = -0.020, TARGET = 0.030;
 
-      // Solo / Team toggle
-      var toggleOpts = Array.prototype.slice.call(document.querySelectorAll(".toggle__opt"));
-      var entryType = document.getElementById("f-entryType");
-      toggleOpts.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          toggleOpts.forEach(function (b) {
-            b.classList.remove("is-active");
-            b.setAttribute("aria-checked", "false");
-          });
-          btn.classList.add("is-active");
-          btn.setAttribute("aria-checked", "true");
-          entryType.value = btn.getAttribute("data-value");
-        });
-      });
+    function ctxFor(el) {
+      var cs = getComputedStyle(el);
+      var c = document.createElement("canvas").getContext("2d");
+      c.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+      return { ctx: c, size: parseFloat(cs.fontSize), upper: cs.textTransform === "uppercase" };
+    }
 
-      var msg = document.getElementById("formMsg");
-      var submitBtn = document.getElementById("applySubmit");
+    function box(ctx, ch) {
+      var m = ctx.measureText(ch);
+      if (m.actualBoundingBoxRight === undefined) return null;
+      return {
+        adv: m.width,
+        left: -m.actualBoundingBoxLeft,   // ink left edge, relative to origin
+        right: m.actualBoundingBoxRight   // ink right edge, relative to origin
+      };
+    }
 
-      function resetToggle() {
-        toggleOpts.forEach(function (b, i) {
-          b.classList.toggle("is-active", i === 0);
-          b.setAttribute("aria-checked", i === 0 ? "true" : "false");
-        });
-        entryType.value = "Solo";
-      }
+    /* Solve the relief for the boundary between chars a and b. */
+    function relief(ctx, size, a, b) {
+      var cur = box(ctx, a), nxt = box(ctx, b);
+      if (!cur || !nxt) return 0;
+      var adv = cur.adv + K * size;
+      var gap = (adv + nxt.left) - cur.right;
+      var need = TARGET * size - gap;
+      return need > 0 ? need : 0;
+    }
 
-      function finish(ok) {
-        submitBtn.disabled = false;
-        if (ok) {
-          form.reset();
-          resetToggle();
-          msg.textContent = "Application received. Watch your inbox — teams are announced September 7.";
-          msg.className = "form-msg is-ok";
-        } else {
-          msg.textContent = "Something went wrong sending that. Please try again in a moment.";
-          msg.className = "form-msg is-err";
+    function solve(el) {
+      var f = ctxFor(el);
+      if (!box(f.ctx, "I")) return;              // unsupported , leave as set
+
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (n) {
+          // §1.6 , the cursive overlay has its own fit; never re-kern it.
+          return n.parentElement.closest(".script")
+            ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
         }
+      });
+      var nodes = [], n;
+      while ((n = walker.nextNode())) nodes.push(n);
+
+      nodes.forEach(function (node) {
+        var raw = node.nodeValue;
+        var disp = f.upper ? raw.toUpperCase() : raw;
+        var frag = null, buf = "";
+        for (var i = 0; i < disp.length; i++) {
+          var c = disp[i], nx = disp[i + 1] || "";
+          var need = 0;
+          if (nx && c !== " " && nx !== " " && (c === "I" || nx === "I")) {
+            need = relief(f.ctx, f.size, c, nx);
+          }
+          if (need > 0) {
+            frag = frag || document.createDocumentFragment();
+            if (buf) { frag.appendChild(document.createTextNode(buf)); buf = ""; }
+            var s = document.createElement("span");
+            s.textContent = raw[i];            // keep source casing; CSS uppercases
+            s.style.letterSpacing = "calc(" + K + "em + " + need.toFixed(3) + "px)";
+            frag.appendChild(s);
+          } else {
+            buf += raw[i];
+          }
+        }
+        if (frag) {
+          if (buf) frag.appendChild(document.createTextNode(buf));
+          node.parentNode.replaceChild(frag, node);
+        }
+      });
+    }
+
+    /* ----------------------------------------------------------------
+       R16 , TYPE MUST NEVER VERTICALLY OVERLAP.
+       Line advance is never a chosen number:
+         advance(n → n+1) = ink_bottom(n) − ink_top(n+1) + 0.06 × cap
+       Measured off the real ink boxes of the real strings, so overlap is
+       impossible by construction rather than avoided by attention.
+       Fixed pixel offsets are rejected , they collided on 5 of 7 blocks.
+       ---------------------------------------------------------------- */
+    function inkRun(ctx, s) {
+      var m = ctx.measureText(s);
+      return { asc: m.actualBoundingBoxAscent, desc: m.actualBoundingBoxDescent };
+    }
+
+    /* margin-top sits between the LAST rendered line of the previous block
+       and the FIRST line of the next one. Measuring the whole element is
+       wrong the moment a line wraps: the height counts two line boxes, the
+       margin goes hugely negative and the lines staple together. Take the
+       last line box off a Range instead, and clamp so no metric can ever
+       pull further than half a line. */
+    function lastLineHeight(el) {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var rects = r.getClientRects();
+      if (rects.length) return rects[rects.length - 1].height;
+      return el.getBoundingClientRect().height;
+    }
+
+    function stack(el) {
+      var lines = el.querySelectorAll(".t1-line");
+      if (lines.length < 2) return;
+      var f = ctxFor(el);
+      if (!box(f.ctx, "I")) return;
+      var cap = inkRun(f.ctx, "H").asc;          // cap height, measured
+
+      for (var i = 1; i < lines.length; i++) {
+        var prev = lines[i - 1], cur = lines[i];
+        cur.style.marginTop = "0px";             // reset before measuring
+        var pTxt = f.upper ? prev.textContent.toUpperCase() : prev.textContent;
+        var cTxt = f.upper ? cur.textContent.toUpperCase() : cur.textContent;
+        // ink_bottom(n) − ink_top(n+1) in a y-down frame = desc(n) + asc(n+1)
+        var advance = inkRun(f.ctx, pTxt).desc + inkRun(f.ctx, cTxt).asc + 0.06 * cap;
+        if (!isFinite(advance)) continue;
+        var lh = lastLineHeight(prev);
+        var m = advance - lh;
+        if (m < -0.5 * lh) m = -0.5 * lh;        // hard floor against overlap
+        cur.style.marginTop = m.toFixed(2) + "px";
       }
+    }
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
+    /* ----------------------------------------------------------------
+       R17 , MICRO TIER TRACKS TIGHT.
+       Word space set to 0.86× the face's natural space, solved against
+       the loaded face. Guard: if any justified line's word gap exceeds
+       1.5× natural, that paragraph falls back to flush-left rather than
+       stretching , this is what stops rivers.
+       ---------------------------------------------------------------- */
+    function microFit(el) {
+      var cs = getComputedStyle(el);
+      var c = document.createElement("canvas").getContext("2d");
+      c.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+      var natural = c.measureText(" ").width;
+      if (!natural) return;
 
-        var payload = {
-          name: form.name.value.trim(),
-          email: form.email.value.trim(),
-          phone: form.phone.value.trim(),
-          portfolio: form.portfolio.value.trim(),
-          entryType: entryType.value,
-          socialPlatform: form.socialPlatform.value,
-          socialLink: form.socialLink.value.trim(),
-          video: form.video.value.trim(),
-          submittedAt: new Date().toISOString()
-        };
+      // 0.86× natural: word-spacing is additive, so hand back the deficit.
+      el.style.wordSpacing = (-0.14 * natural).toFixed(3) + "px";
 
-        submitBtn.disabled = true;
-        msg.textContent = "Sending…";
-        msg.className = "form-msg";
+      // Measure the realised gap per line; trip the 1.5× guard if needed.
+      el.classList.remove("is-flush");
+      var node = el.firstChild;
+      if (!node || node.nodeType !== 3) return;
+      var text = node.nodeValue, r = document.createRange(), rects, worst = 0;
+      r.selectNodeContents(el);
+      rects = r.getClientRects();
+      if (rects.length < 2) return;               // single line never justifies
 
-        if (!SHEET_ENDPOINT) {
-          // Not wired to a sheet yet — accept optimistically so the page is demoable.
-          console.warn("SHEET_ENDPOINT is not set — application was not recorded.");
-          finish(true);
-          return;
+      var idx = 0, target = natural * 1.5;
+      for (var L = 0; L < rects.length - 1; L++) {  // last line isn't justified
+        // walk the characters that fall on this line box
+        var start = idx, w = 0, spaces = 0;
+        while (idx < text.length) {
+          r.setStart(node, idx); r.setEnd(node, Math.min(idx + 1, text.length));
+          var cr = r.getBoundingClientRect();
+          if (cr.top >= rects[L].bottom - 1) break;
+          if (text[idx] === " ") spaces++;
+          idx++;
+        }
+        if (spaces < 1) continue;
+        var slice = text.slice(start, idx).replace(/\s+$/, "");
+        w = c.measureText(slice).width;
+        var realised = natural + (rects[L].width - w) / spaces;
+        if (realised > worst) worst = realised;
+      }
+      if (worst > target) el.classList.add("is-flush");
+    }
+
+    /* ----------------------------------------------------------------
+       §3.3 , hold the plane continuous.
+       Each section paints its own .plane box, so without this the lattice
+       restarts at every panel edge and the organism gets chopped , the
+       rejected "regional wash that cuts the plane". Offsetting each plane
+       by its own document position makes every box a window onto ONE
+       plane: the dots line up across each seam, and the photo plate spans
+       the whole document rather than being re-cropped per section.
+       ---------------------------------------------------------------- */
+    var CELL = 11;   // halftone cell; 45° pitch = CELL/√2 ≈ 7.8px
+
+    function alignPlanes() {
+      var docH = document.documentElement.scrollHeight;
+      document.querySelectorAll(".plane").forEach(function (p) {
+        var host = p.parentElement;
+        var top = host.getBoundingClientRect().top + window.scrollY;
+        // lattice: shift into the document grid, modulo one cell
+        p.style.setProperty("--plane-y", (-(top % CELL)).toFixed(2) + "px");
+        // photo plate: one image the height of the whole document
+        p.style.setProperty("--plane-photo-size", "100vw " + docH + "px");
+        p.style.setProperty("--plane-photo-y", (-top).toFixed(2) + "px");
+
+        // §3.3 , enforce the opacity band with an assert.
+        var op = parseFloat(getComputedStyle(p).opacity);
+        if (op < 0.15 || op > 0.30) {
+          console.warn("§3.3 plane opacity out of band (15–30%):", op, host.className);
+        }
+      });
+    }
+
+    /* Report which licensed faces actually resolved, so a missing file is
+       visible rather than silently absorbed by the fallback stack. */
+    function faceReport() {
+      if (!document.fonts || !document.fonts.check) return;
+      var want = { Bootzy: "T1 display (hero)", AppleGaramond: "micro / reading tier",
+                   Grotalism: "T1 alternate", Glamour: "cursive overlay" };
+      var missing = [];
+      var lines = Object.keys(want).map(function (f) {
+        var ok = document.fonts.check('16px "' + f + '"');
+        if (!ok) missing.push(f);
+        return (ok ? "  OK      " : "  MISSING ") + f + " , " + want[f];
+      });
+      console.info("[Hopamine faces]\n" + lines.join("\n"));
+      if (missing.indexOf("AppleGaramond") > -1) {
+        console.warn("R15: micro tier is running on an OS serif stand-in. " +
+                     "Supply Apple Garamond (or a cleared replacement) to render it properly.");
+      }
+    }
+
+    /* Hero emphasis. The word sits large and skewed off the body line and
+       is allowed to bite into its neighbours, but NEVER by more than 25% of
+       the adjacent glyph, measured against that glyph's real advance in the
+       parent's own face. Past that it reads as clutter rather than accent. */
+    var EMPH_MAX_OVERLAP = 0.25;
+
+    function emphFit() {
+      document.querySelectorAll(".emph").forEach(function (el) {
+        var parent = el.parentElement;
+        var cs = getComputedStyle(parent);
+        var c = document.createElement("canvas").getContext("2d");
+        c.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+        var upper = cs.textTransform === "uppercase";
+
+        function edge(node, takeLast) {
+          var t = node && node.nodeType === 3 ? node.nodeValue.replace(/\s+$/, "").replace(/^\s+/, "") : "";
+          if (!t) return 0;
+          var ch = takeLast ? t.slice(-1) : t.charAt(0);
+          if (upper) ch = ch.toUpperCase();
+          return c.measureText(ch).width;
         }
 
-        fetch(SHEET_ENDPOINT, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        }).then(function () { finish(true); })
-          .catch(function () { finish(false); });
+        var lw = edge(el.previousSibling, true);
+        var rw = edge(el.nextSibling, false);
+        el.style.marginLeft  = lw ? (-EMPH_MAX_OVERLAP * lw).toFixed(2) + "px" : "0px";
+        el.style.marginRight = rw ? (-EMPH_MAX_OVERLAP * rw).toFixed(2) + "px" : "0px";
       });
-    })();
+    }
+
+    function run() {
+      faceReport();
+      alignPlanes();
+      document.querySelectorAll(".t1").forEach(function (el) {
+        if (el.dataset.t1src === undefined) el.dataset.t1src = el.innerHTML;
+        else el.innerHTML = el.dataset.t1src;   // restore before re-solving
+        solve(el);                              // §1.3 per-pair I relief
+        stack(el);                              // R16 derived line advance
+      });
+      document.querySelectorAll(".read").forEach(microFit);   // R17
+    }
+
+    // Solve once the real face is resolved, and again when the display
+    // size changes (it is fluid, and the relief is size-dependent).
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+    else window.addEventListener("load", run);
+
+    var t;
+    window.addEventListener("resize", function () {
+      clearTimeout(t); t = setTimeout(run, 180);
+    });
+  })();
+
+  /* ============ Application form → Google Sheets ============ */
+  const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbwuDcqJCHSoQefFOIFWZgIFuo-EM7jvEkbTHlErsFBEAiJgMg3aW__JDfsudp4AWPpM/exec";
+
+  (function () {
+    var form = document.getElementById("applyForm");
+    if (!form) return;
+
+    var toggleOpts = Array.prototype.slice.call(document.querySelectorAll(".toggle__opt"));
+    var entryType = document.getElementById("f-entryType");
+    toggleOpts.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        toggleOpts.forEach(function (b) { b.classList.remove("is-active"); b.setAttribute("aria-checked", "false"); });
+        btn.classList.add("is-active");
+        btn.setAttribute("aria-checked", "true");
+        entryType.value = btn.getAttribute("data-value");
+        syncTeam();
+      });
+    });
+
+    var msg = document.getElementById("formMsg");
+    var submitBtn = document.getElementById("applySubmit");
+    var teamBlock = document.getElementById("teamBlock");
+
+    /* Team entry opens five name + email slots; Solo hides them again. */
+    function syncTeam() {
+      if (teamBlock) teamBlock.hidden = entryType.value !== "Team";
+    }
+    syncTeam();
+
+    /* Collect only the rows that were actually filled in. */
+    function teamMembers() {
+      if (!teamBlock || teamBlock.hidden) return [];
+      var out = [];
+      for (var i = 1; i <= 4; i++) {
+        var n = form["teamName" + i], e = form["teamEmail" + i];
+        var nv = n ? n.value.trim() : "", ev = e ? e.value.trim() : "";
+        if (nv || ev) out.push(nv + " <" + ev + ">");
+      }
+      return out;
+    }
+
+    function resetToggle() {
+      toggleOpts.forEach(function (b, i) {
+        b.classList.toggle("is-active", i === 0);
+        b.setAttribute("aria-checked", i === 0 ? "true" : "false");
+      });
+      entryType.value = "Solo";
+    }
+
+    function finish(ok) {
+      submitBtn.disabled = false;
+      if (ok) {
+        form.reset(); resetToggle();
+        msg.textContent = "Application received. Watch your inbox, teams are announced September 7.";
+        msg.className = "form-msg is-ok";
+      } else {
+        msg.textContent = "Something went wrong sending that. Please try again in a moment.";
+        msg.className = "form-msg is-err";
+      }
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        portfolio: form.portfolio.value.trim(),
+        entryType: entryType.value,
+        socialPlatform: form.socialPlatform.value,
+        socialLink: form.socialLink.value.trim(),
+        video: form.video.value.trim(),
+        teamMembers: teamMembers().join(" | "),
+        submittedAt: new Date().toISOString()
+      };
+      submitBtn.disabled = true;
+      msg.textContent = "Sending…";
+      msg.className = "form-msg";
+      if (!SHEET_ENDPOINT) { finish(true); return; }
+      fetch(SHEET_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      }).then(function () { finish(true); }).catch(function () { finish(false); });
+    });
+  })();
   </script>
 </body>
 </html>
