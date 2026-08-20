@@ -489,6 +489,58 @@
     .form-msg.is-ok  { color: var(--blue); }
     .form-msg.is-err { color: var(--coral); }
 
+    /* ===== CONFIRMATION MODAL — fires only once the Apps Script response
+       actually confirms the row was written; see the submit handler. ===== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 50;
+      background: rgba(22,22,22,0.82);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+    .modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+    .modal {
+      background: var(--cream); color: var(--ink);
+      max-width: 420px; width: 100%;
+      padding: 2.4rem 2.2rem 2rem;
+      border-radius: 2px;
+      text-align: center;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 0.18s ease;
+    }
+    .modal-overlay.is-open .modal { transform: translateY(0) scale(1); }
+    .modal__icon {
+      width: 56px; height: 56px; margin: 0 auto 1.3rem;
+      border-radius: 50%; background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal--err .modal__icon { background: var(--coral); }
+    .modal__icon svg { width: 28px; height: 28px; }
+    .modal__icon svg path { stroke: var(--white); }
+    .modal h3 {
+      font-family: var(--t1); text-transform: uppercase;
+      letter-spacing: var(--track-t1); font-weight: 700;
+      font-size: 1.6rem; line-height: 1.05; margin-bottom: 0.9rem;
+    }
+    .modal p {
+      font-family: var(--micro); font-size: 1.15rem; line-height: 1.5;
+      color: rgba(22,22,22,0.72); margin-bottom: 1.7rem;
+    }
+    .modal button {
+      font-family: var(--micro); text-transform: uppercase;
+      letter-spacing: var(--track-micro); font-weight: 700;
+      font-size: 1.05rem; color: var(--white); background: var(--green);
+      border: 0; border-radius: 2px; padding: 0.85rem 1.8rem;
+      cursor: pointer; transition: background 0.14s ease;
+    }
+    .modal button:hover { background: #47a267; }
+    .modal--err button { background: var(--coral); }
+    .modal--err button:hover { background: #d16f4a; }
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay, .modal { transition: none; }
+    }
+
     /* ===== FOOTER — logo row. §4.1: height ≥1.33× micro TEXT size,
        default 1.55×, floor asserted. §4.2: full opacity, on the ground,
        never boxed (§8), never ghosted (§8). ===== */
@@ -818,6 +870,18 @@
     </div>
   </footer>
 
+  <!-- ============ Submission confirmation modal ============ -->
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+    <div class="modal" id="confirmModalBox">
+      <div class="modal__icon" id="confirmModalIcon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 id="confirmModalTitle">Application received</h3>
+      <p id="confirmModalBody">You're in the queue. Watch your inbox &mdash; teams are announced September 7.</p>
+      <button type="button" id="confirmModalClose">Done</button>
+    </div>
+  </div>
+
   <script>
   /* ==============================================================
      §1.3 , THE I RULE. Per-pair solved kerning (Option D).
@@ -1124,6 +1188,30 @@
     var submitBtn = document.getElementById("applySubmit");
     var teamBlock = document.getElementById("teamBlock");
 
+    var modal = document.getElementById("confirmModal");
+    var modalBox = document.getElementById("confirmModalBox");
+    var modalIcon = document.getElementById("confirmModalIcon");
+    var modalTitle = document.getElementById("confirmModalTitle");
+    var modalBody = document.getElementById("confirmModalBody");
+    var modalClose = document.getElementById("confirmModalClose");
+
+    function openModal(ok, bodyText) {
+      modalBox.parentElement.classList.toggle("modal--err", !ok);
+      modalIcon.innerHTML = ok
+        ? '<svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke-width="2.4" stroke-linecap="round"/></svg>';
+      modalTitle.textContent = ok ? "Application received" : "Submission failed";
+      modalBody.textContent = bodyText;
+      modal.classList.add("is-open");
+      modalClose.focus();
+    }
+    function closeModal() { modal.classList.remove("is-open"); }
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+    });
+
     /* Team entry opens five name + email slots; Solo hides them again. */
     function syncTeam() {
       if (teamBlock) teamBlock.hidden = entryType.value !== "Team";
@@ -1156,9 +1244,11 @@
         form.reset(); resetToggle();
         msg.textContent = "Application received. Watch your inbox, teams are announced September 7.";
         msg.className = "form-msg is-ok";
+        openModal(true, "You're in the queue. Watch your inbox — teams are announced September 7.");
       } else {
         msg.textContent = "Something went wrong sending that. Please try again in a moment.";
         msg.className = "form-msg is-err";
+        openModal(false, "That didn't go through. Please check your connection and try again — nothing was saved.");
       }
     }
 
@@ -1181,12 +1271,23 @@
       msg.textContent = "Sending…";
       msg.className = "form-msg";
       if (!SHEET_ENDPOINT) { finish(true); return; }
+      /* No mode:"no-cors" here on purpose: that made the browser accept the
+         request as sent and call it a day, with no way to tell whether the
+         Apps Script actually wrote the row. Content-Type stays text/plain so
+         this remains a CORS-simple request (no preflight the script can't
+         answer); the response itself carries the real status. */
       fetch(SHEET_ENDPOINT, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
-      }).then(function () { finish(true); }).catch(function () { finish(false); });
+      }).then(function (res) {
+        return res.text().then(function (text) {
+          var data = {};
+          try { data = JSON.parse(text); } catch (parseErr) {}
+          if (res.ok && data.status === "ok") finish(true);
+          else finish(false);
+        });
+      }).catch(function () { finish(false); });
     });
   })();
   </script>
