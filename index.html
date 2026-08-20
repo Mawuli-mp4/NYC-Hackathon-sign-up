@@ -871,7 +871,7 @@
   </footer>
 
   <!-- ============ Submission confirmation modal ============ -->
-  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-hidden="true" aria-labelledby="confirmModalTitle">
     <div class="modal" id="confirmModalBox">
       <div class="modal__icon" id="confirmModalIcon">
         <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1203,9 +1203,15 @@
       modalTitle.textContent = ok ? "Application received" : "Submission failed";
       modalBody.textContent = bodyText;
       modal.classList.add("is-open");
+      modal.removeAttribute("aria-hidden");
+      modal.setAttribute("aria-modal", "true");
       modalClose.focus();
     }
-    function closeModal() { modal.classList.remove("is-open"); }
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.removeAttribute("aria-modal");
+      modal.setAttribute("aria-hidden", "true");
+    }
     modalClose.addEventListener("click", closeModal);
     modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener("keydown", function (e) {
