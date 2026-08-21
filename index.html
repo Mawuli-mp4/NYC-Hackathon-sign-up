@@ -328,7 +328,7 @@
     .hero__steps .step-sep { color: var(--green); }
     .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
     .hero .btn-line { color: var(--cream); }
-    .hero__deadline { font-family: var(--t1); font-size: 1.2rem; color: rgba(242,239,232,0.55); letter-spacing: var(--track-micro); text-transform: uppercase; font-weight: 700; }
+    .hero__deadline { font-family: var(--t1); font-size: 1.2rem; color: var(--cream); letter-spacing: -0.015em; text-transform: uppercase; font-weight: 700; }
     .hero__deadline strong { color: var(--blue); }
 
     /* ===== Blue panel — blue prominent in the cream colourway (§2.2) ===== */
@@ -449,7 +449,7 @@
     .reg-marks { display: flex; align-items: center; gap: 0.55rem; }
     .reg-marks svg { display: block; width: 15px; height: 15px; }
     .reg-marks svg * { stroke: var(--blue); }
-    .reg-bar__label { color: rgba(242,239,232,0.55); font-size: 1.1rem; }
+    .reg-bar__label { color: var(--cream); font-size: 1.1rem; letter-spacing: -0.015em; }
     .reg-bar__count { color: var(--blue); font-size: 1.1rem; }
 
     .apply__form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1.7rem; max-width: 780px; }
@@ -484,7 +484,7 @@
     .toggle__opt.is-active { background: var(--blue); color: var(--ink); }
 
     .apply__actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: 0.5rem; }
-    .apply__note { font-family: var(--t1); font-size: 1.15rem; color: rgba(242,239,232,0.55); text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700; }
+    .apply__note { font-family: var(--t1); font-size: 1.15rem; color: var(--cream); text-transform: uppercase; letter-spacing: -0.015em; font-weight: 700; }
     .apply__note strong { color: var(--blue); }
     .form-msg { grid-column: 1 / -1; font-size: 1rem; min-height: 1.2em; }
     .form-msg.is-ok  { color: var(--blue); }
@@ -603,7 +603,7 @@
       <div class="hero__cta">
         <a href="#apply" class="btn btn-action">Apply to build <span class="arrow">&rarr;</span></a>
         <a href="#how" class="btn btn-line">See how it runs</a>
-        <span class="hero__deadline">Applications close <strong>September 1</strong></span>
+        <span class="hero__deadline">Applications close <strong>September 7</strong></span>
       </div>
     </div>
   </header>
@@ -670,7 +670,7 @@
       <div class="timeline">
 
         <div class="t-row">
-          <div class="t-date"><span class="marker"></span>Sept 1</div>
+          <div class="t-date"><span class="marker"></span>Sept 7</div>
           <div class="t-body">
             <h3>Applications close</h3>
             <p>Enter with a 90-second video pitch, straight to camera, answering why you would be a good fit. That&rsquo;s the whole bar to entry.</p>
@@ -678,7 +678,7 @@
         </div>
 
         <div class="t-row">
-          <div class="t-date"><span class="marker"></span>Sept 7</div>
+          <div class="t-date"><span class="marker"></span>Sept 14</div>
           <div class="t-body">
             <h3>Teams announced</h3>
             <p>Selected builders are matched into teams and briefed on the tracks.</p>
@@ -698,9 +698,9 @@
         <div class="t-row is-live">
           <div class="t-date"><span class="marker"></span>Sept 21</div>
           <div class="t-body">
-            <p class="t-venue">Human VC Headquarters</p>
+            <p class="t-venue">Hunter College campus</p>
             <h3>Day two: build continues</h3>
-            <p>Hybrid day. Half the team works in person at Human VC Headquarters while the other half builds online.</p>
+            <p>Hybrid day. Half the team works in person at Hunter College campus while the other half builds online.</p>
             <span class="t-tag">Hybrid</span>
           </div>
         </div>
@@ -708,7 +708,7 @@
         <div class="t-row is-live">
           <div class="t-date"><span class="marker"></span>Sept 22</div>
           <div class="t-body">
-            <p class="t-venue">Human VC Headquarters</p>
+            <p class="t-venue">Hunter College campus</p>
             <h3>Day three: teams alternate</h3>
             <p>Hybrid again, with the halves swapped. Whoever was online on day two takes the room, and mentor check-ins run throughout.</p>
             <span class="t-tag">Hybrid</span>
@@ -834,7 +834,7 @@
 
         <div class="field field--full apply__actions">
           <button type="submit" class="btn btn-action" id="applySubmit">Submit application <span class="arrow">&rarr;</span></button>
-          <p class="apply__note">Applications close <strong>September 1</strong> &middot; Teams announced <strong>September 7</strong></p>
+          <p class="apply__note">Applications close <strong>September 7</strong> &middot; Teams announced <strong>September 14</strong></p>
         </div>
 
         <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
@@ -878,7 +878,7 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <h3 id="confirmModalTitle">Application received</h3>
-      <p id="confirmModalBody">You're in the queue. Watch your inbox &mdash; teams are announced September 7.</p>
+      <p id="confirmModalBody">You're in the queue. Watch your inbox &mdash; teams are announced September 14.</p>
       <button type="button" id="confirmModalClose">Done</button>
     </div>
   </div>
@@ -1249,9 +1249,9 @@
       submitBtn.disabled = false;
       if (ok) {
         form.reset(); resetToggle();
-        msg.textContent = "Application received. Watch your inbox, teams are announced September 7.";
+        msg.textContent = "Application received. Watch your inbox, teams are announced September 14.";
         msg.className = "form-msg is-ok";
-        openModal(true, "You're in the queue. Watch your inbox — teams are announced September 7.");
+        openModal(true, "You're in the queue. Watch your inbox — teams are announced September 14.");
       } else {
         msg.textContent = "Something went wrong sending that. Please try again in a moment.";
         msg.className = "form-msg is-err";
