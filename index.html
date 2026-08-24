@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Green Tech Futures Hackathon, Climate Week NYC 2026</title>
+  <title>Green Hackathon, Climate Week NYC 2026</title>
   <meta name="description" content="Job-seeking technologists build tangible, portfolio-ready climate prototypes against urgent NYC environmental challenges, presented live to judges, industry vets and hiring climate-tech companies. Climate Week NYC, Sept 20–23." />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Green Tech Futures Hackathon, Climate Week NYC 2026" />
+  <meta property="og:title" content="Green Hackathon, Climate Week NYC 2026" />
   <meta property="og:description" content="Leave your fingerprint in the climate tech sector." />
 
   <style>
@@ -306,8 +306,10 @@
     /* ===== HERO — INK colourway (§2.2: blue = display type + plane) ===== */
     .hero {
       background: var(--ink); color: var(--cream);
-      min-height: 94vh; display: flex; align-items: center;
-      padding-block: clamp(5rem, 12vh, 9rem); overflow: hidden;
+      /* Trimmed from 94vh: the partner lockup now sits above the hero, so
+         this keeps the combined block near a single screen. */
+      min-height: 86vh; display: flex; align-items: center;
+      padding-block: clamp(3.5rem, 9vh, 7rem); overflow: hidden;
     }
     .hero__eyebrow { color: var(--blue); margin-bottom: 2.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem; }
     .hero__eyebrow .sep { color: var(--green); font-family: var(--micro); }
@@ -326,6 +328,13 @@
       text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
     }
     .hero__steps .step-sep { color: var(--green); }
+    /* The one link in this tier — marked with the action colour and an
+       underline so it reads as clickable against the caps run. */
+    .hero__steps a {
+      color: var(--blue); text-decoration: underline;
+      text-underline-offset: 0.18em; text-decoration-thickness: 1px;
+    }
+    .hero__steps a:hover { color: var(--white); }
     .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
     .hero .btn-line { color: var(--cream); }
     .hero__deadline { font-family: var(--t1); font-size: 1.2rem; color: var(--cream); letter-spacing: -0.015em; text-transform: uppercase; font-weight: 700; }
@@ -547,17 +556,23 @@
        never boxed (§8), never ghosted (§8). ===== */
     footer { background: var(--ink); color: rgba(242,239,232,0.55); padding-block: 2.6rem; }
     .footer__grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.6rem 2rem; }
-    .footer__logos { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; }
-    .footer__logos img.logo {
+    .footer__logos, .brandbar__logos { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; }
+    .footer__logos img.logo, .brandbar__logos img.logo {
       height: var(--logo-h);
       min-height: calc(var(--size-micro) * 1.33);   /* the asserted floor */
       width: auto; display: block; opacity: 1;
     }
+
+    /* Partner lockup repeated at the head of the page. Same marks, same
+       §4.1 sizing floor, same full opacity as the footer row. The ink
+       ground runs straight into the hero so it reads as one field. */
+    .brandbar { background: var(--ink); padding-top: 1.9rem; }
+    .brandbar__logos { justify-content: center; }
     .logo-fallback {
       text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700;
       font-size: var(--size-micro); color: var(--cream); line-height: var(--logo-h);
     }
-    .footer__x { color: var(--blue); font-size: var(--size-micro); }
+    .footer__x, .brand-x { color: var(--blue); font-size: var(--size-micro); }
     /* §4.4 — sign-off is HOPAMINE alone. */
     .footer__meta { font-family: var(--t1); font-size: 1.1rem; text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700; }
 
@@ -567,6 +582,19 @@
       .proof__grid { grid-template-columns: 1fr; gap: 2rem; }
       .t-row { grid-template-columns: 1fr; gap: 0.5rem; }
       .apply__form { grid-template-columns: 1fr; }
+    }
+    /* Top lockup only. At full micro size the three marks break onto three
+       lines with the × separators stranded at the ends, and the hero gets
+       shoved off the fold. Scale the row down in its own scope; the footer
+       row keeps the §4.1 default. --logo-h is re-declared here because it
+       resolves against :root otherwise. */
+    @media (max-width: 700px) {
+      .brandbar {
+        --size-micro: 1.05rem;
+        --logo-h: calc(1.05rem * 1.55);
+        padding-top: 1.4rem;
+      }
+      .brandbar__logos { gap: 0.45rem 0.75rem; }
     }
     @media (max-width: 520px) {
       .leave__grid { grid-template-columns: 1fr; }
@@ -581,13 +609,27 @@
 </head>
 <body>
 
+  <!-- ============ PARTNER LOCKUP , same row as the footer ============ -->
+  <div class="brandbar">
+    <div class="wrap brandbar__logos">
+      <img class="logo" src="logos/hopamine.png" alt="Hopamine"
+           onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+      <span class="brand-x">&times;</span>
+      <img class="logo" src="logos/green-jobs-board.png" alt="Green Jobs Board"
+           onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+      <span class="brand-x">&times;</span>
+      <img class="logo" src="logos/seeding-sovereignty.png" alt="Seeding Sovereignty"
+           onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
+    </div>
+  </div>
+
   <!-- ============ HERO , INK colourway ============ -->
   <header class="hero grain">
     <div class="plane"></div>
     <div class="wrap layer">
       <p class="micro hero__eyebrow">
         <span class="stamp"><span class="stamp__n">N 01</span><span class="stamp__dot"></span><span class="stamp__dot"></span></span>
-        Climate Week NYC <span class="sep">·</span> Sept 20&ndash;23 <span class="sep">·</span> NYU Campus
+        Climate Week NYC <span class="sep">·</span> Sept 20&ndash;23
       </p>
       <h1 class="t1">Build the thing that gets you <span class="emph">Hired</span></h1>
       <p class="hero__lede read">
@@ -598,7 +640,8 @@
       <p class="hero__steps">
         <span>Receive a problem statement</span> <span class="step-sep">&rarr;</span>
         <span>Build your climate tech solution</span> <span class="step-sep">&rarr;</span>
-        <span>Keep it as your startup, your portfolio project, or the thing you want to see in the world</span>
+        <span>Keep it as your startup, your portfolio project, or the thing you want to see in the world</span> <span class="step-sep">&rarr;</span>
+        <span>And present at the <a href="https://luma.com/5s1rg5ng" target="_blank" rel="noopener">Green Jobs Pavilion</a></span>
       </p>
       <div class="hero__cta">
         <a href="#apply" class="btn btn-action">Apply to build <span class="arrow">&rarr;</span></a>
@@ -845,7 +888,7 @@
         <div class="reg-marks" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke-width="1.5"/><path d="M12 0v24M0 12h24" stroke-width="1.5"/></svg>
           <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke-width="1.5"/><path d="M12 0v24M0 12h24" stroke-width="1.5"/></svg>
-          <span class="micro reg-bar__label">Green Tech Futures &middot; Registration</span>
+          <span class="micro reg-bar__label">Green Hackathon &middot; Registration</span>
         </div>
         <span class="micro reg-bar__count">N 06 / 06</span>
       </div>
@@ -867,7 +910,7 @@
         <img class="logo" src="logos/seeding-sovereignty.png" alt="Seeding Sovereignty"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.alt}))" />
       </div>
-        <div class="footer__meta">Green Tech Futures &middot; Climate Week NYC 2026</div>
+        <div class="footer__meta">Green Hackathon &middot; Climate Week NYC 2026</div>
     </div>
   </footer>
 
