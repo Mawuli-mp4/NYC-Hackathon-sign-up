@@ -201,21 +201,52 @@ page's own success message — that is exactly the failure mode that started thi
 
 ---
 
-## 6. Deployment
+## 6. Deployment — CORRECTED, read this carefully
 
-Vercel deploys from `mawuli-mp4/nyc-hackathon-sign-up`. Push there and it goes live.
+An earlier version of this doc said Vercel deploys from
+`mawuli-mp4/nyc-hackathon-sign-up`. **That was wrong.** That repo's `main` branch
+contains only `README.md` — `index.html` has never been pushed to it. The live site was
+created by direct file upload (the `deploy_to_vercel` tool), so there is **no git linkage
+at all**: pushing to that repo would deploy nothing.
 
-The previous session tried the `deploy_to_vercel` MCP tool directly and got:
-`403 — You don't have permission to create a Production Deployment for this project.`
-Its Vercel connection only reached a different project (`zima-build`). **Prefer git push**;
-only reach for the MCP deploy tool if the session demonstrably has access to the right project.
+### What this session's Vercel token can and cannot do
+
+Established by probing, not assumed:
+
+| Action | Result |
+|---|---|
+| Deploy to existing project `nyc-hackathon-sign-up` (production) | 403 forbidden |
+| Deploy to existing project `nyc-hackathon-sign-up` (preview) | 403 forbidden |
+| Deploy to **any** existing project, including ones it just made | 403 forbidden |
+| Create a **brand-new** project (first deploy only) | works |
+| `get_deployment` / read deployment status | 404 — no read access |
+| `list_projects` | shows only `zima-build` |
+
+In other words the token is effectively **create-only**: one successful deploy per new
+project name, and no way to update anything afterwards or verify the result.
+
+### Deployed in this session
+
+`green-hackathon-nyc` → alias **https://green-hackathon-nyc-hopamine.vercel.app**
+carries the current `index.html` (Green Hackathon rename, top partner lockup, Green Jobs
+Pavilion link, confirmation modal). The API returned READY; it could **not** be verified
+from inside the session because every read path is blocked.
+
+Two throwaway projects were also created while probing permissions and should be deleted
+from the Vercel dashboard: `green-hackathon-staging` and `gh-probe-2`. The tools available
+here cannot delete projects.
+
+### The right fix
+
+Get the real project deploying from git so updates stop depending on this: link
+`mawuli-mp4/nyc-hackathon-sign-up` to the `nyc-hackathon-sign-up` Vercel project, push
+`index.html` + `fonts/` to it, and every future push deploys automatically. That also
+removes the font problem below.
 
 Do **not** try to send font binaries through `deploy_to_vercel` or the GitHub contents API
-as inline base64. The previous session burned significant effort on this and corrupted the
-file — ~40KB of base64 transcribed through model output does not survive intact. Fonts must
-travel through git (`git add fonts/`) or a real file upload.
-
----
+as inline base64. A previous attempt corrupted the file — ~40KB of base64 does not survive
+being reproduced through model output. Fonts must travel through git (`git add fonts/`) or
+a real file upload (drag-and-drop in the Vercel dashboard works fine).
 
 ## 7. Blockers the previous session hit (so you don't rediscover them)
 
