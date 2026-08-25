@@ -347,13 +347,23 @@
     .bluebar .wrap { display: flex; flex-wrap: wrap; gap: 0.6rem 2.2rem; align-items: center; }
     .bluebar .micro { color: var(--ink); font-size: 1.25rem; }   /* §2.4 micro picks INK on blue: 9.7:1 */
 
+    /* ===== EXPLAINER — one-line answer to "what is this", cream ===== */
+    .explainer { background: var(--cream); padding-top: clamp(2rem, 5vh, 3rem); padding-bottom: clamp(0.5rem, 1.2vh, 0.9rem); }
+    .explainer__q {
+      font-family: var(--t1); text-transform: uppercase; font-weight: 700;
+      letter-spacing: var(--track-micro); color: var(--ink);
+      font-size: clamp(1.4rem, 3vw, 1.9rem); margin-bottom: 0.6rem;
+    }
+    .explainer__a { color: rgba(22,22,22,0.78); font-size: 1.15rem; max-width: 62ch; }
+
     /* ===== THESIS — cream ===== */
     /* Page two — the statement now owns the screen. Single column, set
        large enough to BE the composition rather than support it, and the
        section holds a near-full viewport. */
     .thesis {
-      padding-block: clamp(4rem, 10vh, 7rem);
-      min-height: 96vh;
+      padding-top: clamp(1.5rem, 3vh, 2.5rem);
+      padding-bottom: clamp(4rem, 10vh, 7rem);
+      min-height: 72vh;
       display: flex;
       align-items: center;
     }
@@ -403,7 +413,7 @@
       100% { box-shadow: 0 0 0 0 rgba(91,194,231,0); }
     }
     .t-body h3 { font-family: var(--t1); text-transform: uppercase; letter-spacing: var(--track-micro); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .t-venue { font-family: var(--t1); font-size: 1.2rem; font-weight: 700; letter-spacing: var(--track-micro); text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; }
+    .t-body .t-venue { font-family: var(--t1); font-size: 0.95rem; font-weight: 700; letter-spacing: -0.012em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.3rem; white-space: nowrap; }
     .t-body p { color: rgba(255,255,255,0.78); font-size: 1.28rem; max-width: 46ch; }
     .t-tag {
       display: inline-block; text-transform: uppercase; letter-spacing: var(--track-micro);
@@ -576,7 +586,7 @@
     }
     .footer__x, .brand-x { color: var(--blue); font-size: var(--size-micro); }
     /* §4.4 — sign-off is HOPAMINE alone. */
-    .footer__meta { font-family: var(--t1); font-size: 1.1rem; text-transform: uppercase; letter-spacing: var(--track-micro); font-weight: 700; }
+    .footer__meta { font-family: var(--t1); font-size: 1.1rem; text-transform: uppercase; letter-spacing: -0.015em; font-weight: 700; color: var(--cream); }
 
     @media (max-width: 880px) {
       .thesis__grid { grid-template-columns: 1fr; gap: 1.8rem; }
@@ -635,9 +645,8 @@
       </p>
       <h1 class="t1"><span class="hero-big">Green</span> <span class="emph">Hackathon</span></h1>
       <p class="hero__lede read">
-        A green hackathon is a hackathon with one subject: the climate crisis.
-        Job-seeking technologists ship tangible prototypes against urgent NYC
-        environmental challenges, scoped for scale from day one, presented
+        Job-seeking technologists ship tangible climate prototypes against urgent
+        NYC environmental challenges, scoped for scale from day one, presented
         live to judges, industry vets and hiring climate-tech companies.
       </p>
       <p class="hero__steps">
@@ -661,6 +670,18 @@
       <span class="micro">Sept 20&ndash;23</span>
     </div>
   </div>
+
+  <!-- ============ EXPLAINER , cream ============ -->
+  <section class="explainer">
+    <div class="wrap">
+      <h2 class="explainer__q">What is a green hackathon?</h2>
+      <p class="explainer__a">
+        Like a regular hackathon: 72 hours to build a working demo, period.
+        The only difference is the demo has to be a tangible green tech
+        solution &mdash; technology designed to help the earth.
+      </p>
+    </div>
+  </section>
 
   <!-- ============ THESIS , cream ============ -->
   <section class="thesis">
